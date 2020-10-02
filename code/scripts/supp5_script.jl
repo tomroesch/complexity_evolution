@@ -69,7 +69,7 @@ open(date*"_script4_results_METADATA.txt", "a") do io
     write(io, "nu=$nu\n")
     write(io, "l_0=$l_0\n")
 end
-
+@time begin
 # Run simulations on all available workers
 @sync @distributed for j in 1:reps
     for r in 1:length(rho)
@@ -79,6 +79,20 @@ end
         rho_list[r, j] = rho[r]
     end
     println("Run $j done.")
+end
+end
+
+@time begin
+# Run simulations on all available workers
+@sync @distributed for j in 1:reps
+    for r in 1:length(rho)
+        E, L = run(N, f0, fl, rho[r], nu, l_0, emat, steps)
+        E_results[r, j] = E
+        l_results[r, j] = L
+        rho_list[r, j] = rho[r]
+    end
+    println("Run $j done.")
+end
 end
 
 df = DataFrame(gamma=[(E_results...)...], l=[(l_results...)...], rho=[(rho_list...)...])
