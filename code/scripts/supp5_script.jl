@@ -1,5 +1,5 @@
 using CSV, DataFrames, Distributed, Dates, LinearAlgebra, Jedi, Distributions, DelimitedFiles
-using SharedArrays
+using SharedArrays, TimerOutputs
 # Get date to append to output file
 date = Dates.format(Dates.today(), "yyyy_mm_dd")
 
@@ -69,7 +69,7 @@ open(date*"_script4_results_METADATA.txt", "a") do io
     write(io, "nu=$nu\n")
     write(io, "l_0=$l_0\n")
 end
-@time begin
+@timeit to "run1" begin
 # Run simulations on all available workers
 @sync @distributed for j in 1:reps
     for r in 1:length(rho)
@@ -82,7 +82,7 @@ end
 end
 end
 
-@time begin
+@timeit to "run2"  begin
 # Run simulations on all available workers
 @sync @distributed for j in 1:reps
     for r in 1:length(rho)
