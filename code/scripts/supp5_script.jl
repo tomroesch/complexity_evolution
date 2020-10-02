@@ -39,15 +39,13 @@ rho_list = SharedArray{Float64, 2}(length(rho), reps)
     # Initiate population
     pop = mono_pop(N=1000, l=15)
     initiate!(pop, opt=true)
-    rand_rho = rand(steps)
-    rand_nu = rand(steps)
     f = fermi_fitness(f0=f0, fl=fl)
     for i in 1:steps
         bp_substitution!(pop, emat, f)
-        if rand_rho[i] < rho/N
+        if rand() < rho/N
             driver_mutation!(pop)
         end
-        if rand_nu[i] < 0.001
+        if rand() < nu
             l_substitution!(pop, emat, f)
         end
         # Recover lost sites
