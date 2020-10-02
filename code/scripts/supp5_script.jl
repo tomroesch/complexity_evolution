@@ -100,3 +100,4 @@ end
 
 df = DataFrame(gamma=[(E_results...)...], l=[(l_results...)...], rho=[(rho_list...)...])
 CSV.write(date * "supp5_script_results.csv", df)
+to
