@@ -20,7 +20,7 @@ end
 
 # Parameters
 reps = 200
-steps = 5 * 10^2
+steps = 5 * 10^4
 rho = [0, 0.1, 0.5, 1., 2]
 l_0 = 15
 N = 1000
@@ -74,9 +74,9 @@ to = TimerOutput()
 
 @timeit to "run1" begin
 # Run simulations on all available workers
-@sync @distributed for j in 1:reps
+@sync @distributed for j in 1:nprocs()
     for r in 1:length(rho)
-        E, L = run(N, f0, fl, rho[r], nu, l_0, emat, steps)
+        E, L = run(N, f0, fl, rho[r], nu, l_0, emat, 1)
         E_results[r, j] = E
         l_results[r, j] = L
         rho_list[r, j] = rho[r]
