@@ -1,11 +1,11 @@
-using Plots, CSV, DataFrames, Jedi, Statistics, Measures, LaTeXStrings
+using Plots, Jedi, Measures, LaTeXStrings
 
-# Find file path
+# Find figure folder
 path = @__FILE__
-directory = splitdir(path)[1]
+figure_directory = splitpath(path)[1:end-3] |> x->joinpath(x..., "figures/")
 
 # Set default plotting style
-default_gr!()
+default_pyplot!()
 
 # Set fitness parameters
 N = 1000
@@ -39,7 +39,7 @@ p2D = contourf(
     fmt=:pdf
 )
 
-savefig(p2D, directory*"../../figures/2Dfitness.pdf")
+savefig(p2D, figure_directory * "2Dfitness.pdf")
 
 # Compute exponential approximation
 g = collect(0:0.01:1)
@@ -67,4 +67,4 @@ plot!(
     label="Exponential"
     )
 
-savefig(p2D, directory*"../../figures/1Dfitness.pdf")
+savefig(p1D, figure_directory * "1Dfitness.pdf")
