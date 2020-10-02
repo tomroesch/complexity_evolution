@@ -1,5 +1,5 @@
 using CSV, DataFrames, Distributed, Dates, LinearAlgebra, Jedi, Distributions, DelimitedFiles
-
+using SharedArrays
 # Get date to append to output file
 date = Dates.format(Dates.today(), "yyyy_mm_dd")
 
@@ -15,11 +15,12 @@ end
     using Jedi
     using Distributions
     using DelimitedFiles
+    using SharedArrays
 end
 
 # Parameters
 reps = 200
-steps = 5 * 10^8
+steps = 5 * 10^2
 rho = [0, 0.1, 0.5, 1., 2]
 l_0 = 15
 N = 1000
@@ -27,6 +28,10 @@ nu = 1/N
 emat = 2 * (ones(4, 4) - Matrix{Float64}(I, 4, 4))
 f0 = 50/2N
 fl = 0.2/2N
+
+E_results = SharedArray{Float64, 2}(length(rho), reps)
+l_results = SharedArray{Float64, 2}(length(rho), reps)
+rho_list = SharedArray{Float64, 2}(length(rho), reps)
 
 
 # Function to run one simulation
@@ -65,17 +70,16 @@ open(date*"_script4_results_METADATA.txt", "a") do io
     write(io, "l_0=$l_0\n")
 end
 
-open(date*"_supp5_script_results.csv", "w") do io
-   write(io, "rho\tl\tGamma\n")
-end
-
 # Run simulations on all available workers
 @sync @distributed for j in 1:reps
     for r in 1:length(rho)
         E, L = run(N, f0, fl, rho[r], nu, l_0, emat, steps)
-        open(date*"_script4_results.csv", "a") do io
-            writedlm(io, [rho L E])
-        end
+        E_results[r, j] = E
+        l_results[r, j] = L
+        rho_list[r, j] = rho[r]
     end
     println("Run $j done.")
 end
+
+df = DataFrame(gamma=[(E_results...)...], l=[(l_results...)...], rho=[(rho_list...)...])
+CSV.write(date * "supp5_script_results.csv", df)
