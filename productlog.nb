@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      3920,        120]
-NotebookOptionsPosition[      3353,        102]
-NotebookOutlinePosition[      3745,        118]
-CellTagsIndexPosition[      3702,        115]
+NotebookDataLength[      3999,        122]
+NotebookOptionsPosition[      3432,        104]
+NotebookOutlinePosition[      3824,        120]
+CellTagsIndexPosition[      3781,        117]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -34,7 +34,8 @@ Cell[BoxData[{
       RowBox[{"1", "+", "k"}], ")"}], " ", "*", " ", 
      RowBox[{"(", 
       RowBox[{"G", "-", "G0"}], ")"}]}], " ", "-", " ", 
-    RowBox[{"N", "*", "l", "*", "b", "*", "f0", "*", 
+    RowBox[{"N", "*", "l", "*", 
+     RowBox[{"1", "/", "b"}], "*", "f0", "*", 
      RowBox[{"Exp", "[", 
       RowBox[{"b", "*", 
        RowBox[{"(", 
@@ -50,22 +51,23 @@ Cell[BoxData[{
  CellChangeTimes->{{3.806269359695195*^9, 3.8062694447968197`*^9}, 
    3.806429470287805*^9, {3.8064295163211193`*^9, 3.806429516560845*^9}, {
    3.808606424798593*^9, 3.808606442991551*^9}, {3.808613144052321*^9, 
-   3.808613150212068*^9}},
- CellLabel->"In[28]:=",ExpressionUUID->"d24ddcc7-ceaf-4764-a1a4-545f755edc60"],
+   3.808613150212068*^9}, {3.810073320694027*^9, 3.810073321976347*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"d24ddcc7-ceaf-4764-a1a4-545f755edc60"],
 
 Cell[BoxData[
  TemplateBox[{
   "Solve", "ifun", 
    "\"Inverse functions are being used by \
 \\!\\(\\*RowBox[{\\\"Solve\\\"}]\\), so some solutions may not be found; use \
-Reduce for complete solution information.\"", 2, 29, 2, 20391464329611481621, 
+Reduce for complete solution information.\"", 2, 2, 1, 20401708151330426147, 
    "Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.806269445638687*^9, 3.806429471192143*^9, 
-  3.8064295180494623`*^9, 3.808606443983658*^9, 3.808613151252254*^9},
+  3.8064295180494623`*^9, 3.808606443983658*^9, 3.808613151252254*^9, 
+  3.8100733357334957`*^9},
  CellLabel->
   "During evaluation of \
-In[28]:=",ExpressionUUID->"95ec77fa-f01c-46bc-9a82-1de9c4ebc8b4"],
+In[1]:=",ExpressionUUID->"1dbbaf9b-7c58-480b-9f88-ca6cf4c9d449"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -77,7 +79,6 @@ Cell[BoxData[
       RowBox[{"ProductLog", "[", 
        FractionBox[
         RowBox[{
-         SuperscriptBox["b", "2"], " ", 
          SuperscriptBox["\[ExponentialE]", 
           RowBox[{
            RowBox[{"b", " ", "dE"}], "-", 
@@ -96,8 +97,9 @@ Cell[BoxData[
           RowBox[{"1", "+", "k"}], ")"}], " ", "n"}]], "]"}]}], "b"]}], "}"}],
    "}"}]], "Output",
  CellChangeTimes->{3.806269445683888*^9, 3.806429471203538*^9, 
-  3.8064295180543118`*^9, 3.8086064439947*^9, 3.808613151284721*^9},
- CellLabel->"Out[29]=",ExpressionUUID->"eabfe54e-0a64-4906-8a5c-36b042c15373"]
+  3.8064295180543118`*^9, 3.8086064439947*^9, 3.808613151284721*^9, 
+  3.810073335753048*^9},
+ CellLabel->"Out[2]=",ExpressionUUID->"01c4ec57-8df0-4ff2-8fae-177f5cdd7442"]
 }, Open  ]]
 },
 WindowSize->{808, 905},
@@ -118,9 +120,9 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 1100, 31, 52, "Input",ExpressionUUID->"d24ddcc7-ceaf-4764-a1a4-545f755edc60"],
-Cell[1683, 55, 544, 12, 42, "Message",ExpressionUUID->"95ec77fa-f01c-46bc-9a82-1de9c4ebc8b4"],
-Cell[2230, 69, 1107, 30, 74, "Output",ExpressionUUID->"eabfe54e-0a64-4906-8a5c-36b042c15373"]
+Cell[580, 22, 1171, 32, 52, "Input",ExpressionUUID->"d24ddcc7-ceaf-4764-a1a4-545f755edc60"],
+Cell[1754, 56, 569, 13, 42, "Message",ExpressionUUID->"1dbbaf9b-7c58-480b-9f88-ca6cf4c9d449"],
+Cell[2326, 71, 1090, 30, 74, "Output",ExpressionUUID->"01c4ec57-8df0-4ff2-8fae-177f5cdd7442"]
 }, Open  ]]
 }
 ]
