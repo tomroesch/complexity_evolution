@@ -1,4 +1,4 @@
-using CSV, DataFrames, Distributed, Dates, LinearAlgebra, Jedi, Distributions, DelimitedFiles
+using CSV, DataFrames, Distributed, Dates, LinearAlgebra, Jevo, Distributions, DelimitedFiles
 using SharedArrays, TimerOutputs
 # Get date to append to output file
 date = Dates.format(Dates.today(), "yyyy_mm_dd")
@@ -12,17 +12,17 @@ end
 
 # Import packages needed for all workers
 @everywhere  begin
-    using Jedi
+    using Jevo
     using Distributions
     using DelimitedFiles
     using SharedArrays
 end
 
 # Parameters
-reps = 200
-steps = 5 * 10^8
+reps = 500
+steps = 1 * 10^7
 rho = [0, 0.1, 0.5, 1., 2]
-l_0 = 15
+l_0 = [15, 20, 25, 30, 35]
 N = 1000
 nu = 1/N
 emat = 2 * (ones(4, 4) - Matrix{Float64}(I, 4, 4))
@@ -37,27 +37,27 @@ rho_list = SharedArray{Float64, 2}(length(rho), reps)
 # Function to run one simulation
 @everywhere function run(N, f0, fl, rho, nu, l_0, emat, steps)
     # Initiate population
-    pop = mono_pop(N=1000, l=15)
-    initiate!(pop, opt=true)
-    f = fermi_fitness(f0=f0, fl=fl)
+    pop = Jevo.mono_pop(N=1000, l=l_0)
+    Jevo.initiate!(pop, opt=true)
+    f = Jevo.fermi_fitness(f0=f0, fl=fl)
     for i in 1:steps
-        bp_substitution!(pop, emat, f)
+        Jevo.bp_substitution!(pop, emat, f)
         if rand() < rho/N
-            driver_mutation!(pop)
+            Jevo.driver_mutation!(pop)
         end
         if rand() < nu
-            l_substitution!(pop, emat, f)
+            Jevo.l_substitution!(pop, emat, f)
         end
         # Recover lost sites
         if length(pop.seqs) < 7
-            initiate!(pop, opt=true)
+            Jevo.initiate!(pop, opt=true)
         end
     end
-    return get_energy(pop, emat), length(pop.seqs)  
+    return Jevo.get_energy(pop, emat), length(pop.seqs)  
 end
 
 # Write Metadata
-open(date*"_script4_results_METADATA.txt", "a") do io
+open(date*"_supp5_script_METADATA.txt", "a") do io
     write(io, "N=$N\n")
     write(io, "f0=$f0\n")
     write(io, "fl=$fl\n")
@@ -70,11 +70,11 @@ end
 
 to = TimerOutput()
 
-@timeit to "run1" begin
+@timeit to "initiation run" begin
 # Run simulation once for Julia
 @sync @distributed for j in 1:nprocs()
     for r in 1:length(rho)
-        E, L = run(N, f0, fl, rho[r], nu, l_0, emat, 1)
+        E, L = run(N, f0, fl, rho[r], nu, l_0[r], emat, 1)
         E_results[r, j] = E
         l_results[r, j] = L
         rho_list[r, j] = rho[r]
@@ -83,11 +83,11 @@ to = TimerOutput()
 end
 end
 
-@timeit to "run2"  begin
+@timeit to "full run"  begin
 # Run simulations and enjoy speed
 @sync @distributed for j in 1:reps
     for r in 1:length(rho)
-        E, L = run(N, f0, fl, rho[r], nu, l_0, emat, steps)
+        E, L = run(N, f0, fl, rho[r], nu, l_0[r], emat, steps)
         E_results[r, j] = E
         l_results[r, j] = L
         rho_list[r, j] = rho[r]
@@ -97,5 +97,5 @@ end
 end
 
 df = DataFrame(gamma=[(E_results...)...], l=[(l_results...)...], rho=[(rho_list...)...])
-CSV.write(date * "supp5_script_results.csv", df)
+CSV.write(date * "_supp5_script.csv", df)
 println(to)
