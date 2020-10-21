@@ -1,54 +1,85 @@
+using CSV, DataFrames, Distributed, Dates, LinearAlgebra, Jevo, Distributions, DelimitedFiles
+using SharedArrays, TimerOutputs
+# Get date to append to output file
+date = Dates.format(Dates.today(), "yyyy_mm_dd")
 
-using CSV, DataFrames, Distributed
+# Get number of workers
+if length(ARGS) == 1
+    addprocs(parse(Int64, ARGS[1]))
+elseif length(ARGS) > 1
+    throw(ArgumentError("Only one command line argument (cores)."))
+end
 
-rho = [0, 0.000005, 0.00001, 0.00005, 0.0001, 0.0005, 0.001]
-addprocs(length(rho))
-
+# Import packages needed for all workers
 @everywhere  begin
-    using Jedi
-    using LinearAlgebra
+    using Jevo
     using Distributions
+    using DelimitedFiles
     using SharedArrays
     emat = 2 * (ones(4,4) - Matrix{Float64}(I, 4, 4))
-    N = 1000
-    f = fermi_fitness(f0=100/2N)
+    generations = 1
 end
 
+# Simulation parameters
+N = 1000
+reps = 100                        # Repetitions
+rho_array = [0, 0.1, 0.5, 1]      # Driver mutation rates
+l_array = collect(5:30)           # Binding site lengths
+f0_array = [20, 50, 100] ./ 2N    # Fitness scales
+fl = 0
 
-results = SharedArray{Float64, 2}(length(rho), 26)
-@everywhere function run(rho, N)
+
+
+Gamma_results = SharedArray{Float64, 4}(length(rho_array), length(l_array), length(f0_array), reps)
+RHO = deepcopy(Gamma_results)
+L = deepcopy(Gamma_results)
+F0 = deepcopy(Gamma_results)
+
+
+@everywhere function run(rho, N, f, l0, generations)
     Gamma_arr = zeros(Float64, 26)
-    for (i,l) in enumerate(5:30)
-        for k in 1:100
-            pop = driver_trailer(N=N, L=l, l=l)
-            initiate_rand!(pop, 20)
-            mut_arr = rand(Poisson(1), 2000000)
-            rho_arr = rand(Poisson(rho), 2000000)
-            for j in 1:2000000
-                for m in 1:mut_arr[j]
-                    mutation!(pop)
-                end
-                for m in 1:rho_arr[j]
-                    driver_mutation!(pop)
-                end
-                sample_gen!(pop, f, emat; remove=true)
-            end
-            Gamma_arr[i] += sum(get_energy(pop, emat) .* pop.freqs) / pop.N / l
-            println("run $k done")
-	end
-        println("Length $l done. Gamma= $(Gamma_arr[i]/100)")
+    pop = Jevo.driver_trailer(N=N, L=l0, l=l0)
+    Jevo.initiate!(pop, 20)
+    for j in 1:generations
+        for m in 1:rand(Poisson(1), 1)[1]
+            Jevo.mutation!(pop)
+        end
+        for m in 1:rand(Poisson(rho), 1)[1]
+            Jevo.driver_mutation!(pop)
+        end
+        Jevo.sample_gen!(pop, f, emat; remove=true)
     end
-    return Gamma_arr
+    return sum(Jevo.get_energy(pop, emat) .* pop.freqs) / pop.N / l0
 end
 
 
-@sync @distributed for r in 1:length(rho)
-    results[r, :] = run(rho[r], N) ./ 100
+# Write Metadata
+open(date*"_script1_METADATA.txt", "a") do io
+    write(io, "N=$N\n")
+    write(io, "f0=$f0_array\n")
+    write(io, "fl=$fl\n")
+    write(io, "repetitions=$reps\n")
+    write(io, "generations=$generations\n")
+    write(io, "rho=$rho_array\n")
+    write(io, "l_0=$l_array\n")
 end
 
-df_results = vcat(results'...)
-df_l = vcat((collect(5:30) * ones(length(rho))')...)
-df_rho = vcat((rho * ones(26)')'...)
 
-df = DataFrame(rho=df_rho, l=df_l, gamma=df_results)
-CSV.write("script1_results.csv", df)
+# Run simulations 
+@sync @distributed for j in 1:reps
+    for i in 1:length(rho_array)
+        for l in 1:length(l_array)
+            for r in 1:length(f0_array)
+                f = Jevo.fermi_fitness(f0=f0_array[r])
+                Gamma_results[i, l, r, j] = run(rho_array[i], N, f, l_array[l], generations)
+                RHO[i, l, r, j] = rho_array[i]
+                L[i, l, r, j] = l_array[l]
+                F0[i, l, r, j] = f0_array[r]
+            end
+        end
+    end
+    println("Run $j done.")
+end
+
+df = DataFrame(gamma=[(Gamma_results...)...], l=[(L...)...], rho=[(RHO...)...], f0=[(F0...)...])
+CSV.write(date * "_script1.csv", df)
