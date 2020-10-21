@@ -45,7 +45,7 @@ F0 = deepcopy(Gamma_results)
         for m in 1:rand(Poisson(1), 1)[1]
             Jevo.mutation!(pop)
         end
-        for m in 1:rand(Poisson(rho), 1)[1]
+        for m in 1:rand(Poisson(rho / N), 1)[1]
             Jevo.driver_mutation!(pop)
         end
         Jevo.sample_gen!(pop, f, emat; remove=true)
