@@ -16,8 +16,9 @@ end
     using Distributions
     using DelimitedFiles
     using SharedArrays
+    using LinearAlgebra
     emat = 2 * (ones(4,4) - Matrix{Float64}(I, 4, 4))
-    generations = 1
+    generations = 2 * 10^6
 end
 
 # Simulation parameters
