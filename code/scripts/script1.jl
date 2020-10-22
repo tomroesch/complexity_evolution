@@ -40,7 +40,7 @@ F0 = deepcopy(Gamma_results)
 @everywhere function run(rho, N, f, l0, generations)
     Gamma_arr = zeros(Float64, 26)
     pop = Jevo.driver_trailer(N=N, L=l0, l=l0)
-    Jevo.initiate!(pop, 20)
+    Jevo.initiate!(pop, 20, opt=true)
     for j in 1:generations
         for m in 1:rand(Poisson(1), 1)[1]
             Jevo.mutation!(pop)
@@ -71,7 +71,7 @@ end
     for i in 1:length(rho_array)
         for l in 1:length(l_array)
             for r in 1:length(f0_array)
-                f = Jevo.fermi_fitness(f0=f0_array[r])
+                f = Jevo.fermi_fitness(f0=f0_array[r], l=l_array[l])
                 Gamma_results[i, l, r, j] = run(rho_array[i], N, f, l_array[l], generations)
                 RHO[i, l, r, j] = rho_array[i]
                 L[i, l, r, j] = l_array[l]
