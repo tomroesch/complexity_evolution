@@ -79,7 +79,7 @@ end
         for l in 1:length(l_array)
             for r in 1:length(f0_array)
                 f = Jevo.fermi_fitness(f0=f0_array[r], l=l_array[l])
-                E = run(N, f0, fl, rho[r], nu, l_0[r], emat, 1)
+                E = run(N, f0, fl, rho_array[i], nu, l_array[r], emat, steps)
                 RHO[i, l, r, j] = rho_array[i]
                 L[i, l, r, j] = l_array[l]
                 F0[i, l, r, j] = f0_array[r]
