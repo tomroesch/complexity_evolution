@@ -62,13 +62,13 @@ end
 # Write Metadata
 open(date*"_script1_sub_METADATA.txt", "a") do io
     write(io, "N=$N\n")
-    write(io, "f0=$f0\n")
+    write(io, "f0=$f0_array\n")
     write(io, "fl=$fl\n")
     write(io, "repetitions=$reps\n")
     write(io, "steps=$steps\n")
-    write(io, "rho=$rho\n")
+    write(io, "rho=$rho_array\n")
     write(io, "nu=$nu\n")
-    write(io, "l_0=$l_0\n")
+    write(io, "l=$l_array\n")
 end
 
 
