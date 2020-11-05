@@ -1,61 +1,96 @@
-using CSV, DataFrames, Distributed, Dates
-
-
+using CSV, DataFrames, Distributed, Dates, LinearAlgebra, Jevo, Distributions, DelimitedFiles
+using SharedArrays, TimerOutputs
+# Get date to append to output file
 date = Dates.format(Dates.today(), "yyyy_mm_dd")
 
+# Get number of workers
 if length(ARGS) == 1
     addprocs(parse(Int64, ARGS[1]))
 elseif length(ARGS) > 1
     throw(ArgumentError("Only one command line argument (cores)."))
 end
 
-# Load necessary packages on all workers
+# Import packages needed for all workers
 @everywhere  begin
-    using Jedi
-    using LinearAlgebra
+    using Jevo
     using Distributions
+    using DelimitedFiles
     using SharedArrays
-    emat = 2 * (ones(4,4) - Matrix{Float64}(I, 4, 4))
-    N = 1000
-    f0 = 25/2N
 end
 
-# Driver mutation rates
-rho = [0, 0.1, 0.5, 1., 2, 4]
+# Parameters
+reps = 500
+steps = 1 * 10^6
+N = 1000
+nu = 0
+emat = 2 * (ones(4, 4) - Matrix{Float64}(I, 4, 4))
+rho_array = [0, 0.1, 0.5, 1]      # Driver mutation rates
+l_array = collect(5:30)           # Binding site lengths
+f0_array = [20, 50, 100] ./ 2N    # Fitness scales
+fl = 0
 
-# Lengths
-l_arr = collect(8:40)
-
-# Shared arrays to store results
-E = SharedArray{Float64, 3}(length(rho), length(l_arr), 1000)
-L = SharedArray{Float64, 3}(length(rho), length(l_arr), 1000)
-RHO = SharedArray{Float64, 3}(length(rho), length(l_arr), 1000)
 
 
-# Loop with most reps outside to maximize use of multiple cores
-@sync @distributed for j in 1:1000
-    for k in eachindex(l_arr)
-        f = fermi_fitness(f0=f0, l=l_arr[k])
-        pop = driver_trailer(N=1000, l=l_arr[k], L=l_arr[k])
-        for r in eachindex(rho)
-            # Reset population
-            initiate_rand!(pop, 1, overwrite=true)
-            # Precompute random numbers
-            driver_muts = rand(500000)
-            for i in 1:500000
-                Jedi.bp_substitution!(pop, emat, f)
-                if driver_muts[i] < rho[r]/N
-                    driver_mutation!(pop)
-                end
+Gamma_results = SharedArray{Float64, 4}(length(rho_array), length(l_array), length(f0_array), reps)
+RHO = deepcopy(Gamma_results)
+L = deepcopy(Gamma_results)
+F0 = deepcopy(Gamma_results)
+
+
+# Function to run one simulation
+@everywhere function run(N, f0, fl, rho, nu, l_0, emat, steps)
+    # Initiate population
+    pop = Jevo.mono_pop(N=1000, l=l_0)
+    Jevo.initiate!(pop, opt=true)
+    f = Jevo.fermi_fitness(f0=f0, fl=fl)
+    for i in 1:steps
+        Jevo.bp_substitution!(pop, emat, f)
+        if rand() < rho/N
+            Jevo.driver_mutation!(pop)
+        end
+        if rand() < nu
+            Jevo.l_substitution!(pop, emat, f)
+        end
+        # Recover lost sites
+        if length(pop.seqs) < 7
+            Jevo.initiate!(pop, opt=true)
+        end
+    end
+    return Jevo.get_energy(pop, emat)
+end
+
+# Write Metadata
+open(date*"_script1_sub_METADATA.txt", "a") do io
+    write(io, "N=$N\n")
+    write(io, "f0=$f0\n")
+    write(io, "fl=$fl\n")
+    write(io, "repetitions=$reps\n")
+    write(io, "steps=$steps\n")
+    write(io, "rho=$rho\n")
+    write(io, "nu=$nu\n")
+    write(io, "l_0=$l_0\n")
+end
+
+
+
+# Run simulation once for Julia
+@sync @distributed for j in 1:reps
+    for i in 1:length(rho_array)
+        for l in 1:length(l_array)
+            for r in 1:length(f0_array)
+                f = Jevo.fermi_fitness(f0=f0_array[r], l=l_array[l])
+                E = run(N, f0, fl, rho[r], nu, l_0[r], emat, 1)
+                RHO[i, l, r, j] = rho_array[i]
+                L[i, l, r, j] = l_array[l]
+                F0[i, l, r, j] = f0_array[r]
             end
-            E[r, k, j] = get_energy(pop, emat)[1]
-            L[r, k, j] = l_arr[k]
-            RHO[r, k, j] = rho[r]
         end
     end
     println("Run $j done.")
 end
 
-# Store results in a DataFrame
-df = DataFrame(gamma=[(E...)...], l=[(L...)...], rho=[(RHO...)...])
-CSV.write(date*"_script1_sub_results.csv", df)
+
+
+
+df = DataFrame(gamma=[(Gamma_results...)...], l=[(L...)...], rho=[(RHO...)...], f0=[(F0...)...])
+CSV.write(date * "_script1_sub.csv", df)
