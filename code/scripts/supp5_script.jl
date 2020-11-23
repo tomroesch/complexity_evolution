@@ -21,13 +21,13 @@ end
 # Parameters
 reps = 500
 steps = 1 * 10^8
-rho = [0, 0.1, 0.5, 1., 2]
-l_0 = [15, 20, 25, 30, 35]
+rho = [0, 0.1, 0.5, 1., 2, 5]
+l_0 = 10
 N = 100
 nu = 1/N
 emat = 2 * (ones(4, 4) - Matrix{Float64}(I, 4, 4))
 f0 = 50/2N
-fl = 0.2/2N
+fl = 1.4 / 2N
 
 E_results = SharedArray{Float64, 2}(length(rho), reps)
 l_results = SharedArray{Float64, 2}(length(rho), reps)
@@ -87,7 +87,7 @@ end
 # Run simulations and enjoy speed
 @sync @distributed for j in 1:reps
     for r in 1:length(rho)
-        E, L = run(N, f0, fl, rho[r], nu, l_0[r], emat, steps)
+        E, L = run(N, f0, fl, rho[r], nu, l_0, emat, steps)
         E_results[r, j] = E
         l_results[r, j] = L
         rho_list[r, j] = rho[r]
