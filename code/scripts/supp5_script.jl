@@ -74,7 +74,7 @@ to = TimerOutput()
 # Run simulation once for Julia
 @sync @distributed for j in 1:nprocs()
     for r in 1:length(rho)
-        E, L = run(N, f0, fl, rho[r], nu, l_0[r], emat, 1)
+        E, L = run(N, f0, fl, rho[r], nu, l_0, emat, 1)
         E_results[r, j] = E
         l_results[r, j] = L
         rho_list[r, j] = rho[r]
