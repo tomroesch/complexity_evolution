@@ -26,7 +26,7 @@ l_0 = 10
 N = 100
 nu = 1/N
 emat = 2 * (ones(4, 4) - Matrix{Float64}(I, 4, 4))
-f0 = 50/2N
+f0 = 200/2N
 fl = 1.4 / 2N
 
 E_results = SharedArray{Float64, 2}(length(rho), reps)
