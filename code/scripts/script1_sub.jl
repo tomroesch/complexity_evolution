@@ -56,7 +56,7 @@ F0 = deepcopy(Gamma_results)
         if length(pop.seqs) < 7
             Jevo.initiate!(pop, opt=true)
         end
-        if rescue && (Jevo.get_energy(pop, emat) > 3/4 - 5/2l_0)
+        if rescue && (Jevo.get_energy(pop, emat) > 3/4*l_0 - 5/2)
             Jevo.initiate!(pop, opt=true)
         end
     end
