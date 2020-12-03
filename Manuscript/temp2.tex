@@ -1,0 +1,763 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[top=0.85in,footskip=0.75in]{geometry}
+
+%
+\usepackage{amsmath,amssymb}
+
+%
+\usepackage{changepage}
+
+%
+\usepackage[utf8x]{inputenc}
+
+%
+\usepackage{textcomp,marvosym}
+
+%
+\usepackage{cite}
+
+%
+\usepackage{nameref,hyperref}
+
+%
+\usepackage[right]{lineno}
+\linenumbers %
+\usepackage{gensymb}
+
+%
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *, family = * }
+
+%
+\usepackage[table]{xcolor}
+
+\usepackage{mathtools}
+
+%
+\usepackage{array}
+
+%
+\usepackage{float}
+
+%
+\newcolumntype{+}{!{\vrule width 2pt}}
+
+%
+\newlength\savedwidth
+\newcommand\thickcline[1]{%
+	\noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+	\cline{#1}%
+	\noalign{\vskip\arrayrulewidth}%
+	\noalign{\global\arrayrulewidth\savedwidth}%
+}
+
+%
+\newcommand\thickhline{\noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+	\hline
+	\noalign{\global\arrayrulewidth\savedwidth}}
+
+
+%
+\usepackage{setspace}
+%
+
+
+%
+\usepackage[hang,aboveskip=5pt,labelfont=bf,labelsep=period,justification=justified,singlelinecheck=off,textfont=small]{caption}
+\renewcommand{\figurename}{Fig.}
+
+\bibliographystyle{naturemag}
+
+
+%
+%
+
+%
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
+
+%
+\date{}
+
+%
+\usepackage{lastpage,fancyhdr,graphicx}
+\usepackage{epstopdf}
+\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+%
+%
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\footrule}{\hrule height 2pt \vspace{2mm}}
+\fancyheadoffset[LR]{1.00in}
+\fancyfootoffset[LR]{1.00in}
+%
+
+%
+
+
+\renewcommand{\a}{{\bf a}}
+\renewcommand{\b}{{\bf b}}
+
+\newcommand{\ol}{\overline}
+%
+\newcommand{\ep}{\epsilon}
+\newcommand{\s}{\sigma}
+\renewcommand{\L}{{\cal L}}
+\newcommand{\F}{{\cal F}}
+\newcommand{\comment}[1]{{\noindent \color{blue} #1}}
+\newcommand{\corr}[1]{{\noindent \color{red} \small #1}}
+\newcommand{\add}[1]{{\noindent \color{green} \small #1}}
+\newcommand{\purple}[1]{\textcolor{purple}{#1}}
+\newcommand{\outcomment}[1]{}
+%
+\newcommand{\EQ}{\begin{equation}}
+\newcommand{\EE}{\end{equation}}
+\newcommand{\EQA}{\begin{eqnarray}}
+\newcommand{\EEA}{\end{eqnarray}}
+\newcommand{\productlog}{\mathrm{ProductLog}}
+\graphicspath{ {images/} }
+\newcounter{firstbib}
+%
+
+
+\begin{document}
+	\vspace*{0.2in}
+
+	%
+	\begin{flushleft}
+		{\Large
+			\textbf\newline{Survival of the complex/Survival of the most flexible}
+		}
+		\newline
+		\\
+		Tom R\"oschinger\textsuperscript{1},
+		Simone Pompei\textsuperscript{2},
+		Michael L\"assig\textsuperscript{3,*},
+		\\
+		\bigskip
+		\textbf{1} Division of Chemistry and Chemical Engineering, California Institute of Technology, Pasadena, CA 91125 \\
+		\textbf{2} \\
+		\textbf{3} Institut f\"ur Biologische Physik, Universit\"at zu K\"oln,
+		Z\"ulpicherstr. 77, 50937, K\"oln, Germany
+		\\
+		\bigskip
+
+		%
+		%
+		%
+		%
+		%
+		%\textbf{\P} These authors contributed equally to this work.
+
+		%
+		* mlaessig@uni-koeln.de
+
+	\end{flushleft}
+	\subsection*{To Do List}
+	\textcolor{green}{
+	\begin{itemize}
+		\item Supplementary Methods 3: Does the diversity within a population depend on the alphabet size, as seen from the analytic results? $\Delta E ~\sim \left(\frac{n}{n-1}\right)^2$. This is important for the results in this section.
+		\item 
+	\end{itemize}
+	}
+	\subsection*{Abstract}
+	\textcolor{blue}{Following text is simply copied from thesis and not changed yet.}
+	Molecular recognition has a crucial role on multiple biological systems on various scales, from cell to cell recognition and the understanding of pathogen immunity to transcription. The stochastic nature of these processes are ideal circumstances for statistical models. The model I present consists of two components, the driver and the trailer, and the evolutionary dynamics depend on their mutual specificity. Quantitative evolutionary 
+	models for two component systems usually consider the evolution of one component only, the trailer, based on a fixed driver. The novelty of this approach
+	is to explicitly include mutations of the driver that are caused form external events, and force the two component system out of the most beneficial 
+	interaction. In this system, complexity is introduced as a dynamic variable, and it is shown how neutral driver mutations and dynamic complexity can be 
+	included in models for quantitative trait evolution. As a result of coevolution, the complexity of the driver and trailer components increases.
+
+
+
+	\subsection*{Introduction}
+	The complexity of a system is a crucial component in molecular evolution. Evolution of gene regulation is often assumed to be driven by the gain and loss of transcription factor binding sites (TFBS), rather than the evolution of a transcription factor (TF) itself \cite{dynamics2015}. This assumption is based on the pleotropy of most TFs that have been observed, and that the pleotropic effects of a mutation in such a transcription factor are deleterious for most interactions, such that no change is possible. However, these TF's are conserved across species to begin with \cite{schmidt2010five}. Some classes of TFs display extensive levels of species diversity while maintaining structure and function\cite{Nowick2010} and it has been discussed that protein evolution is a crucial source of developmental variation \cite{lynch2008resurrecting}, but the consequences of protein evolution remain unclear \cite{WAGNER2008377, Voordeckers2015}. The evolution of gene regulatory networks is assumed to be driven by modifications 
+	and the evolution of TFs \cite{chavez2006, perez2009}.
+	
+	\subsection*{Methods}
+	\input{methods.tex}
+
+	\begin{figure}
+		\includegraphics[width=\linewidth]{figure1_part.pdf}\caption{(A) Two dimensional fitness landscape, which binding site length on the x-axis, and intensive binding energy $\gamma=E/l$ on the y-axis. (B) The fitness landscape for fixed binding site length (blue) and the exponential approximation (orange).}\label{fig1}
+	\end{figure}
+
+	\subsection*{Results}
+	\subsubsection*{Evolutionary Steady State in Non-equilibrium}
+	We start by investigating how externally driven mutations that change the consensus sequence of the binding site force the system into a new state that is different from the steady state that can be observed when binding is only disrupted by mutations in the binding site. Therefore, we use the Fokker-Planck equation describing the evolution of the mean $\Gamma$ of a quantitative trait $E$ \cite{nourmohammad2013evolution},
+	\begin{equation}
+		\frac{\partial}{\partial t}Q(\Gamma,t)=\left[\frac{\tilde{g}^{\Gamma\Gamma}}{2N}\frac{\partial^2}{\partial\Gamma^2}- \frac{\partial}{\partial\Gamma}\left(m^\Gamma+\tilde{g}^{\Gamma\Gamma}\tilde{s}_\Gamma\right)\right]Q(\Gamma,t)\label{equ:trait_diffusion}.
+	\end{equation}
+	The equation can be broken down into three evolutionary forces: genetic drift, selection and mutations. In the low mutation rate regime, the selection term can be written as $\tilde{s}_\Gamma = \partial_\Gamma f(\Gamma)$, i.e., the derivative of the fitness landscape at the value of the trait mean. The effective diffusion coefficient is given by $\tilde g^{\Gamma\Gamma} = \langle \Delta\rangle \sim \mu$ (\purple{include scaling with alphabet size here?}), hence scaling the strength of selection with the variation of the trait within a population (\purple{mention Fisher's theorem here?}). 
+	The mutational drift term is $m^\Gamma = -\frac{n}{n-1} (\Gamma-\Gamma_0)$, where $n$ is the alphabet size of the binding site and $\Gamma_0$ is the mean trait in the absence of selection. 
+	The mutation term describes deterministic drift that sites undergo due to mutations. If this term dominates the deterministic behavior, then most sites will have binding energies similar to random sequences. Driver mutations have the same impact on the binding energy as trailer mutations. Hence, in the evolutionary description of traits, we can add the driver mutation rate $\rho$ to the trailer mutation rate $\mu$ in the mutation term, $m^\Gamma\sim-(\rho+\mu)(\Gamma-\Gamma_0)$, for details see \textcolor{blue}{methods oder supplementary}.\\
+	The selection term $\tilde{g}^{\Gamma\Gamma}\tilde{s}_\Gamma$ describes the selection coefficient of the trait mean value $\tilde{s}_\Gamma$ and how it is amplified by the diversity within a population $\tilde{g}^{\Gamma\Gamma}=\langle\Delta_E\rangle $. For low mutation rates, the diversity within a populations is given by its value in the absence of selection, and very small. Most positions are monomorphic, thus a mutation in the driver sequence changes the binding energy for nearly all sites equally. Therefore the diversity within a population is not affected by driver mutations, and the selection term is invariant.\\
+	The non-deterministic term $\tilde{g}^{\Gamma\Gamma}/2N$ describes how mutations lead to a spread in mean binding energies across populations. In the original formulation this term also scales with the mean diversity within a population. However, driver mutations also lead to an increased diversity across populations, since they change the mean binding energy, while not effecting the mean diversity within a population. Hence, we have to distinguish between the two response terms $\tilde{g}^{\Gamma\Gamma}$. The response coefficient in the selection term, which only scales with the trailer mutation rate $\mu$, is labeled $\tilde{g}^{\Gamma\Gamma}_s\sim\mu$. The response coefficient in the non deterministic term is scaling with both mutation rates and is labeled $\tilde{g}^{\Gamma\Gamma}_d\sim\mu+\rho$.\\
+	In the absence of selection, the steady state distribution $Q_0(\Gamma)$ is the same as in the absence of driving, since the scaling of both terms cancels out in the final solution (\textcolor{blue}{Methods}). However, in a driven environment $\rho>0$, the steady state solution becomes
+	\begin{equation}
+		Q(\Gamma)=\frac{1}{Z}Q_0(\Gamma)\exp\left[\frac{2N}{1+\kappa}F(\Gamma)\right],\label{equ:steady_state}
+	\end{equation}
+	where $\kappa=\rho/\mu$ is the ration of driver and trailer mutation rate, which is the key parameter describing the strength of non-equilibrium. A rescaling of the fitness landscape $\hat{F}(\Gamma)=F(\Gamma)/(1+\kappa)$ reproduces the steady state distribution in equilibrium with a weaker fitness landscape. This result is explained by the different scalings of the population genetic terms with non-equilibrium. The mutation drift towards smaller binding energies increases as well as diffusion across populations, while selection is not increased and therefore relatively weaker.\\
+	Note, that the rescaling of the fitness landscape effectively only applies to the term in the fitness landscape regarding the binding probability. The fitness length cost is absorbed in the normalization of the steady state distribution in \ref{equ:steady_state}.
+	In the low mutation rate limit, an exact steady state distribution can be numerically computed from substitution rates (Methods or Supplementary). In the regime of small selection coefficients $Ns\sim1$, an analytic steady state can be approximated (Methods or Supplementary), which is equal to the result in equation \ref{equ:steady_state}.
+
+    	\begin{figure}[H]
+    	\centering
+    	\includegraphics[width=.5\linewidth]{genetic_load.pdf}\caption{This could be a figure to show what the genetic load is.}\label{fig:load_theory}
+    \end{figure}
+
+
+	\subsubsection*{Optimal Binding Site Length}
+	First, we compute the binding site length which minimizes the genetic load, therefore being the fittest and is expected to be the steady state that binding site lengths are evolving towards.
+	Non-equilibrium weakens the ability to find specific binding sites, while the length fitness cost is independent of the state of the binding. Hence, the fitness trade-off changes with the level of non-equilibrium. We can consider the fitness effects in the terms of genetic load. For weak non-equilibrium most sites are functional and are at the edge of the upper fitness plateau, which can approximated by an exponential tail. Then the genetic load of a population is given by $\mathcal{L}\sim \left|\frac{\partial}{\partial \Gamma} f(\Gamma,l)\right|+f_l\,l$. The average load across populations is given by the load at the deterministic mutation-selection balance $\hat{\Gamma}$(Methods or Supplementary) (\textcolor{blue}{Cite Torsten and Daniel Paper}). We retrieve two terms for the genetic load, with different scalings of the binding length. The linear fitness cost for binding length, and the binding probability term with scales inversely with binding length,
+	\begin{equation}
+		\mathcal{L} = \xi \frac{l_0}{l}(1+\kappa)+\lambda \, \frac{l}{l_0} = \mathcal{L}_\kappa + \mathcal{L}_\lambda,
+		\label{equ:maintext_load}
+	\end{equation}
+	Where $\xi$ is a combination of various parameters, $\lambda=2Nf_l/l_0\sim 1$ is the scaled fitness cost for length,  and $l_0$ is a length scaling parameter (supplementary methods). A derivation of this equation can be found in the supplementary methods. Due to the trade off between the cost of adding positions to the binding site and reducing load by adding positions, there is an optimal binding site length, which minimizes the total genetic load,
+	\begin{equation}
+		l_\text{opt}\sim l_0\sqrt{\frac{1+\kappa}{\lambda}}.
+	\end{equation}
+	In equilibrium, the optimal binding site length is close to the length scaling parameter, $l\sim l_0$.  
+
+
+\subsubsection*{Dynamical Evolution of Binding Site Length}
+In a real population, length adaptation is a dynamical process, driven by mutations which include a new position in the sequence in its recognition. We assume these mutations to be very rare compared to other type of mutations, such that the timescales separate. Therefore, we can assume that the system is in the respective steady state of binding energies each time a length mutation occurs. Assuming an alphabet size of 4 and using the match/mismatch energy model (see Methods), a newly added position will be a match with probability 1/4, since it has not been selected for yet and hence is random compared to the driver sequence. Length increase mutations are on average neutral in respect to the adaption term in the fitness landscape in first order, and are only influenced by the fitness cost of length (supplementary methods),
+\begin{equation}
+	\sigma^+ = -\frac{\lambda}{l_0} =-\frac{\partial \mathcal{L}_\lambda}{\partial l}.
+\end{equation}
+Since $\lambda\sim 1$, length increase mutations are in the regime of weak selection (\purple{Here either an explanation of what this means or a nice reference}).
+However, length decrease mutations are affected by the fact that the binding site is adapted, i.e., removing a position is likely to hit an interaction which is beneficial to the binding interaction. If the binding site has $k$ matches, then the probability of removing a match is $k/l$, which is much larger than the probability of adding a match, which we showed to be $1/4$. The selection coefficient for removing a position has an additional term,
+\begin{equation}
+	\sigma^- = \frac{\lambda}{l_0} - \xi \epsilon\beta \left(\frac{l_0}{l}\right)^2 (1+\kappa) = \frac{\partial \mathcal{L}_\lambda}{\partial l} + l_0 \epsilon\beta\frac{\partial \mathcal{L_\kappa}}{\partial l}.
+\end{equation}
+Unexpectedly, the adaptation term is scaled by the effective length scaling parameter, and the mutational effect. Therefore, the selection coefficient for length decrease mutations shows marginal selection, $\sigma^-\sim (l/l_0)^2\sim 1$. Due to the separation of time scales, we can write down substitution rates for length mutations, which lead to a steady state distribution. In first order, we can compute the substitution rates as 
+\begin{equation}
+	u_{+/-} \sim 1 + \frac{\sigma^{+/-}}{2} \sim \exp\left[\frac{\sigma^{+/-}}{2} \right].
+\end{equation}
+Using detailed balance (\purple{Maybe avoid this term here?}), we can compute the steady state distribution for binding site lengths. Using the rates above, we find that the resulting distribution is
+\begin{equation}
+	P(l) \simeq \exp\left[-\frac{\epsilon\beta l_0}{2}\mathcal{L}_\kappa - \mathcal{L}_\lambda\right].
+	\label{equ:length_distribution}
+\end{equation}
+When comparing the maximum of this distribution with the length with minimizes the load, we find that the length $l_opt^*$ which optimizes the effective potential resulting from the dynamical calculation is larger by a factor $\sqrt{l_0}$,
+\begin{equation}
+	l_{opt}^* \simeq \sqrt{l_0}\,l_{opt}.
+\end{equation}
+This is an enormous difference, see Figure~\ref{fig:length_scalings_main}(A), and shows how important it is to consider the dynamics of the evolution of binding site lengths. Transcription factor binding sites have lengths around 10bp in prokaryotes (\purple{cite "Why are TF binding sites 10bp long."}), so we can tune the fitness cost for length $f_l$ such that the optimal length computed from the dynamical computation is around that value in equilibrium ($\kappa=0$). Then, we observe an increase in binding site length with increasing non-equilibrium, due to the sites being under more selective pressure to maintain their binding specificity, which shifts the weights in the trade off with the cost of increased binding site length.
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{length_scaling.pdf}
+	\caption{(A) Optimal length computed from minimizing the genetic load (green), the minimum of the effective potential shown in equation~(\ref{equ:length_distribution}) (blue), and the length minimizing the genetic load rescaled by $\sqrt{l_0}$ (orange) for parameters $f_0 = 50/2N$, $f_l=.2/2N$ and $N=1000$. (B) Minimum of the effective potential shown in equation~(\ref{equ:length_distribution}) (blue), and the length minimizing the genetic load rescaled by $\sqrt{l_0}$ (orange) for parameters $f_0 = 50/2N$, $f_l=1.4/2N$ and $N=1000$.}
+	\label{fig:length_scalings_main}
+\end{figure}
+
+
+\comment{
+\paragraph{Comment 29. 7., edited 8. 9. Does the slow dynamics of $\ell$ lead to a steady state that is localized at $\ell_{\rm opt}$?}
+\begin{enumerate}
+\item Our model has a conditional stationary distribution $Q(k|\ell)$ peaked at $k/\ell \equiv \gamma$ with
+\EQ
+\gamma - \gamma_0 = \frac{\ell_0}{\ell}
+\EE
+and $\gamma_0 = 1/4$. This stationary state has a scaled load $\L \equiv (F - F_{\max})/ \tilde \sigma$ given by
+\EQ
+\L = \L_\kappa + \L_\lambda = (\gamma - \gamma_0) (1 + \kappa) + \lambda  \frac{\ell}{\ell_0},
+\EE
+leading to an optimum length
+\EQ
+\ell_{\rm opt} = \ell_0 \sqrt{\frac{1+\kappa}{\lambda}}.
+\EE
+
+\item In the exponential regime of the (scaled) fitness landscape $\F(k |\ell) \equiv F(k|\ell) / \tilde \sigma$, which is relevant for stable sites, the scaled load equals the scaled selection coefficient of site mutations,
+\EQ
+s = \frac{\partial \F(k,\ell)}{\partial k} = \L_\kappa = (\gamma - \gamma_0) (1 + \kappa);
+\EE
+prefactors to be double-checked with Torsten-Daniel paper.
+
+\item Perturbation theory in $\ep \equiv 1/\ell_0$. We can distinguish terms of order $\ep$ and of order $\ell/\ell_0 \sim 1$. We have $\gamma \sim \lambda \sim 1$ and $\L \sim 1$; the scaling of $\lambda$ follows from the requirement $\ell_{\rm opt} \approx \ell_0$ at $\kappa = 0$. In particular, we can distinguish selection coefficients $ \sim 1/\ell_0$ (weak selection) and $ \sim 1$ (marginal selection).
+
+\item Adiabatic substitution dynamics of $\ell$. Length changes are assumed to occur with much smaller rates than mutations; we assume they are emitted from the steady state of the $k$ dynamics. Each length change is coupled to a stochastic change of $k$. Because the dynamics takes place in the regime of weak and marginal selection, we use a linear approximation for substitution probabilities. Hence, we can first compute average selection coefficients $\bar s_+$ and $\bar s_-$ for changes of $\ell$ and then evaluate the corresponding substitution rates using these averages.
+
+In this framework, we find the processes $\ell \to \ell +1$ with average selection coefficient
+\EQA
+\bar s_+ & = & \frac{3}{4} \frac{(-s)}{4} + \frac{1}{4} \frac{3s}{4} - \frac{\lambda}{\ell_0}
+\\
+& = & - \frac{\lambda}{\ell_0}
+\EEA
+(near-neutral evolution) and the processes $\ell \to \ell - 1$ with average scaled selection coefficent
+\EQA
+\bar s_- & = & \gamma \frac{(-3s)}{4} + (1 - \gamma) \frac{s}{4} + \frac{\lambda}{\ell_0}
+\\
+& = & -(\gamma - \gamma_0) s + \frac{\lambda}{\ell_0}
+\\
+& = & - (\gamma - \gamma_0)^2 (1 + \kappa) + \frac{\lambda}{\ell_0}
+\\
+& = & \ell_0 \frac{\partial \L_\kappa}{\partial \ell} + \frac{\partial \L_\lambda}{\partial \ell}
+\EEA
+(marginal selection). These selection coefficients are of different magnitude: length increases are constrained only by the weak linear term, length decreases are marginally constrained by conservation of site function.
+
+\item These asymmetric dynamics define an adaptive ratchet, which acts to increase selection for complexity. A typical cycle $\ell \to \ell + 1 \to \ell$ has the following average scaled fitness balance:
+\begin{itemize}
+\item substitution $\ell \to \ell + 1$: weak fitness loss, $\bar s_+ = - \lambda / \ell_0 = - O(\ep)$;
+\item equilibration at $\ell + 1$: weak fitness gain, $\Delta \L_{\ell + 1} = \L_\kappa (\ell) - \L_\kappa (\ell +1) \sim \ell_0 /\ell^2 = O( \ep)$;
+\item substitution $\ell + 1 \to \ell$: marginal fitness loss,   $\bar s_- = - \ell_0^2 /\ell^2 =- O(\ep^0) $;
+\item equilibration at $\ell$: marginal fitness gain, $\Delta \L_{\ell} = - \L_\kappa (\ell) + \L_\kappa (\ell +1) - \bar s_- = O(\ep^0)  $.
+\end{itemize}
+This cycle could inform a Figure.
+
+\item Effective fitness landscape for length changes. We compute the ratio of the forward and backward substitution rate in first-order approximation,
+\EQA
+\frac{u_{\ell \to \ell+1}}{u_{\ell + 1 \to \ell}} & = & \frac{\exp(\bar s_+/2)}{\exp(\bar s_-/2)} +O(s^2)
+\\
+& \simeq & \exp \left [ - \frac{\ell_0}{2} (\L_\kappa (\ell+1) - \L_\kappa (\ell)) - (\L_\lambda (\ell+1) - \L_\lambda (\ell)) \right ]
+\\
+& \equiv & \exp \big [ \F_{\rm eff} (\ell+1) - \F_{\rm eff} (\ell) \big ]
+\label{u_ratio}
+\EEA
+with an effective scaled fitness potential
+\EQ
+\F_{\rm eff} (\ell) = - \frac{\ell_0}{2} \L_\kappa (\ell) - L_\lambda (\ell) .
+ \EE
+These rates define an equilibrium distribution
+\EQ
+Q(\ell) \sim \exp [ \F_{\rm eff} (\ell)],
+\EE
+which is peaked at
+\EQ
+\ell^* = \ell_0 \sqrt{ \frac{\ell_0}{2} \frac{(1+\kappa)}{\lambda}} = \ell_{\rm opt} \sqrt{ \frac{\ell_0}{2}} .
+\EE
+Compared to the naive distribution $Q(\ell) \sim \exp [ - \L (\ell)]$, which would lead to a peak at $\ell_{\rm opt}$, the ratchet mechanism enhances the evolution of complexity.
+
+\item Summary.
+\begin{itemize}
+\item Non-equilibrium weakens the selection on point mutations at a given complexity, as expressed by an effective fitness landscape
+\EQ
+\F_{\rm eff} (k|\ell) \sim \frac{1}{1 + \kappa} .
+\EE
+\item Non-equilibrium introduces ratchet selection for complexity, as expressed by an effective fitness landscape
+\EQ
+\F_{\kappa, \rm eff} (\ell) \sim \ell_0(1+ \kappa).
+\EE
+This landscape is proportional to $\ell_0$; that is, complexity begets more complexity.
+\end{itemize}
+
+\item Questions:\\
+(1) Is this in qualitative accordance with the evaluation of the rates in (\ref{u_ratio}) beyond first order?
+\\
+(2) How does the fitness balance compare with the numerics?
+\\
+(3) How does $\ell^*$ compare with the numerics?
+\end{enumerate}
+}
+
+	\subsubsection*{Data}
+
+
+	\subsection*{Discussion}
+	\textcolor{purple}{Here we should discuss the meaning of our results. The two factors of increased binding site length. First, the dynamics of length evolution lead to a much higher binding site length in equilibrium, than observed from minimizing the genetic load. But. Also we should discuss which data could support our theory. And finally, the shortcoming of the theory. Like how the approximation of the distribution is not really good for higher selection coefficients. And what how it could be used to improve. And finally how we think experiments could be set up to test the hypthesis experimentally.}
+
+
+
+	
+
+
+
+\begin{thebibliography}{10}
+
+	\expandafter\ifx\csname url\endcsname\relax
+	\def\url#1{\texttt{#1}}\fi
+	\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+	\providecommand{\bibinfo}[2]{#2}
+	\providecommand{\eprint}[2][]{\url{#2}}
+
+
+	\input{papers}
+
+
+\end{thebibliography}
+
+
+
+\section*{Acknowledgments}
+
+
+
+\section*{Author Contributions}
+
+
+\section*{Competing Interests}
+The authors declare no competing interests.
+
+
+\section*{Supplementary Information}
+
+\paragraph*{Supplementary Methods~1}
+\label{supp1}
+{\bf Steady State Approximations.}\\
+
+\noindent In the regime of low mutation rates, $\mu N\ll1$, a population is in a monomorphic state, i.e., dominated by a single genotype, 
+for most of the time. A new mutation fixes in the population with probability $p(s)$ given by \cite{kimura1962probability},
+\begin{equation}
+p(s) = \frac{1-e^{-2s}}{1-e^{-2Ns}},
+\end{equation}
+where $s$ is the selection coefficient of the mutation and $N$ the effective population size. Then, substitutions occur at a rate
+\begin{equation}
+u(s)_{E\rightarrow E'} = N\mu_{E\rightarrow E'}p(s),
+\end{equation}
+where $\mu_{E\rightarrow E'}$ is the rate at which a mutation occurs which changing the binding energy from $E$ to $E'$. Here, we assumed that the fixation 
+of a mutation is under selective pressure, which is the case for mutations in the trailer. We investigate the effects of mutations in the driver, which occur 
+with rate $\rho$. These mutations are results of external events, e.g., a mutation in the coding sequence of a transcription factor leading to a missense mutation. 
+In isolated system of driver and trailer, these mutations are not under selection pressure, but can change the binding energy nonetheless. 
+Here we assume that these mutations happen for all driver sequences at the same time and therefore can be treated as substitutions as well. 
+Thus, we add a term to the mutation rate in the form of
+\begin{equation}
+u(s)_{E\rightarrow E'}=   N\mu_{E\rightarrow E'}p(s) + \rho_{E\rightarrow E'},
+\end{equation}
+where $\mu_{E\rightarrow E'}$ is the mutation rate with driver mutations change the binding energy from $E$ to $E'$.
+Assume, both trailer and driver have the same alphabet size, then both mutation rates are given by a constant rate times a factor accounting for 
+the entropic difference between both states, $\mu_{E\rightarrow E'}=\mu\,w_{E\rightarrow E'}$ and $\rho_{E\rightarrow E'}=\rho\,w_{E\rightarrow E'}$. 
+Even if the assumption of equal alphabet sizes doesn't hold, e.g., in protein-DNA interaction, the differences in alphabet sizes can be accounted for 
+by rescaling the mutation rates by a constant factor. The entropic term $w$ is determined by the substitution rates in the absence of selection.
+We are looking for the distribution of binding energies at steady state, which is equivalent to 
+\begin{equation}
+\frac{u(0)_{E\rightarrow E'}}{u(0)_{E'\rightarrow E}} = \frac{\mu_{E\rightarrow E'}}{\mu_{E'\rightarrow E}}= \frac{w_{E\rightarrow E'}}{w_{E'\rightarrow E}} = 
+\frac{Q_0(E')}{Q_0(E)},
+\end{equation}
+where $Q_0(E)$ is the distribution of binding energies in the absence of fitness. Even though there is non-equilibrium on the level of genotypes, 
+we can look for a steady state distribution of the binding energies. Since the dynamics are one dimensional and fully described by the substitution rates, 
+we can find the steady state distribution $Q(k)$ by imposing detailed balance and solving
+\begin{equation}
+\frac{Q(E')}{Q(E)}=\frac{u(s)_{E\rightarrow E'}}{u(-s)_{E'\rightarrow E}}=  \frac{ N\mu_{E\rightarrow E'}p(s)+\rho_{E\rightarrow E'}}{N\mu_{E\rightarrow E'}p(s)
++\rho_{E\rightarrow E'}}.
+\end{equation}
+In equilibrium, $\rho=0$, the fraction has an exact solution \cite{berg2003stochastic},
+\begin{equation}
+	Q(k) = Q_0(k)\exp[2NF(k)].
+	\label{equ:sub_equ_dist}
+\end{equation}
+In non-equilibrium $\rho>0$, the fraction does not simplify to an exact term as equation~\ref{equ:sub_equ_dist}, but we can compute the exact steady state 
+distribution numerically. However, in the limit of small selection coefficients $Ns\sim1$, the can expand the fraction in orders of the selection coefficient 
+and retrieve,
+\begin{align}
+\frac{Q_0(E')}{Q_0(E)}\frac{ N\mu p(s)+\rho}{N\mu p(s)+\rho}&\approx \frac{Q_0(E')}{Q_0(E)}\left[1+\frac{2s(N-1)}{1+\frac{\rho}{\mu}}+\frac{2s^2(N-1)^2}
+{(1+\frac{\rho}{\mu})^2}+\mathcal{O}(s^3)\right] ,\nonumber\\
+&\approx \frac{Q_0(E')}{Q_0(E)}\exp\left[\frac{2N}{1+\kappa}F(E)\right].
+\end{align}
+Populations are usually large, so $N-1\approx N$, and up to second order the series is equal to an exponential function. The resulting distribution is therefore 
+given by
+\begin{equation}
+	Q(E) = Q_0(E) \exp\left[ \frac{2N}{1+\kappa} F(E) \right].
+\end{equation}
+
+\outcomment{
+\paragraph*{Supplementary Methods~2}
+\label{suppx}
+{\bf Steady State Approximation using substitution rates.}\\ \\
+In the low mutation rate limit, the mean binding energy is more discrete, and a substitution leads to bigger changes in the binding energy. Therefore, selection coefficients can get larger than $N\,s\sim1$, and the approximation of the steady state deviates from the exact distribution. Especially for short binding sites, the range of possible mutations with small effects decreases to the order of 1. To correct for the discrete energy space, we can rescale the non-equilibrium parameter $\kappa$ to an effective parameter $\tilde{\kappa} = \xi\kappa$, where $\xi$ is the rescaling factor which reproduces the first moment of the exact distribution the best. $\alpha$ takes maximal values of order 1, and in figure \ref{supfig1} the retrieved value is shown for different binding lengths $l$ and different fitness parameters $f_0$. For longer binding sites or smaller total selection coefficients, the rescaling factor approaches 1, which is consistent with the fact, that longer binding sites have more mutations with small selection coefficients and approach the continuum limit.
+
+Due to the discrete mean binding energies in the low mutation rate limit, selection coefficients can become larger than in the continuous regime. Therefore the approximation deviates from the exact numerical distribution when the discretization becomes a big factor, i.e., for short sequences or large selections coefficients. When the approximation deviates from the exact solution, it underestimates the effect of non-equilibrium.
+\begin{figure}
+	\includegraphics[width=0.5\linewidth]{robustness.pdf}
+	\caption{\textbf{Robustness in discrete trait space.} }\label{supfig1}
+\end{figure}
+}
+
+\clearpage
+\paragraph*{Supplementary Methods~2}
+\label{supp2}
+{\bf Generic Mutation Drift and Driver mutations.}\\
+Here we use the population genetic notation of quantitative traits \cite{nourmohammad2013evolution}, and give a general form of the mutation drift. In addition we compute the contribution of driver mutations to the mutation drift.\\
+The frequency of nucleotide $i$ at locus $k$ is given by $y_k^i$. The mutation drift of trailer mutations is therefore given by
+
+\begin{equation}
+m^{\Gamma}|_a=\sum_{k=1}^{l}\sum_{i>j}^{n}\mu_{j\rightarrow i}\Delta_{j\rightarrow i}(y_k^i-y_k^j),
+\end{equation}
+
+\noindent where $ \mu_{j\rightarrow i}$ is the mutation rate from nucleotide $j$ to nucleotide $i$ and $\Delta_{j\rightarrow i}$ is the energy difference of nucleotide $j$ to $i$, $\Delta_{j\rightarrow i}=\epsilon_j-\epsilon_i$. In the absence of any mutational bias, the mutation rates are equal, $\mu_{j\rightarrow i}=\mu/n-1$, where $\mu$ is the total mutation rate per position. Note that self mutations are excluded by definition. Inserting into the expression,
+\begin{equation}
+	m^\Gamma|_a=\frac{\mu}{n-1}\sum_{k=1}^{l}\sum_{i>j}^{n}(\epsilon_k^j-\epsilon_k^i)(y_k^i-y_k^j),
+\end{equation}
+we can multiply out the brackets to
+\begin{equation}
+		m^\Gamma|_a=\frac{\mu}{n-1}\sum_{k=1}^{l}\left((1-n)\sum_{j=1}^{n}\epsilon_k^jy_k^j+\sum_{i=1}^{n}\epsilon_k^i\sum_{j\neq i}^{n}y_k^j\right).
+\end{equation}
+Now we use $\sum_{i}y_k^i=1$, such that we can write $\sum_{j\neq i}^{n}y_k^j = 1 - y_k^i$,
+\begin{align}
+m^{\Gamma}|_a&=\frac{\mu}{n-1}\sum_{k=1}^{l}\left((1-n)\sum_{i=1}^{n}\epsilon_k^jy_k^j+\sum_{i=1}^{n}\epsilon_k^i(1-y_k^i)\right),\nonumber\\
+&=\frac{\mu}{n-1}\sum_{k=1}^{l}\left(-n\sum_{i=1}^{n}\epsilon_k^jy_k^j+\sum_{i=1}^{n}\epsilon_k^i\right).
+\end{align}
+The mean trait value is given by $\Gamma=\sum_{k=1}^l\sum_{i=1}^{n}E_iy_k^j$, and the neutral mean value by $\Gamma_0=\frac{1}{n}\sum_{k=1}^l\sum_{i=1}^nE_i$, therefore the mutation drift from trailer mutations is given by
+\begin{equation}
+	m^{\Gamma}|_a=-\mu\frac{n}{n-1}\left(\Gamma-\Gamma_0\right)
+\end{equation}
+In our model driver mutations occur as substitutions, therefore the nucleotide frequencies in the trailer do not change. In general, with the new driver element, each possible nucleotide at that position can have a different contribution to the binding energy. This difference is weighted with the allele frequency of each nucleotide. The energy of nucleotide $i$ with driver element $\alpha$ is denoted by $E^\alpha_i$, the energy at position before the mutation by $E^*_i$. The number of possible driver elements is given by $\beta$, and the mutation rate of driver element $*$ to $\alpha$ by $\rho_{*\rightarrow\alpha}$. Then the contribution to the mutation drift from driver mutations is given by
+\begin{equation}
+m^\Gamma|_\mathbf{b}=\sum_{k=1}^{l}\sum_{\alpha=1}^{\beta}\sum_{i=1}^{n}\rho_{*\rightarrow\alpha}(E^\alpha_i-E^*_i)y_k^i.
+\end{equation}
+Again, we assume that there is no mutational bias, $\rho_{*\rightarrow\alpha}=\rho/(\beta-1)$. We can transform the sum to
+\begin{align}
+	&=-\frac{\rho}{\beta-1}(\beta\Gamma-\sum_{k=1}^{l}\sum_{\alpha=1}^{\beta}\sum_{j=1}^{n}\epsilon_\alpha^jy_k^i),\nonumber\\
+	&=-\rho\frac{\beta}{\beta-1}(\Gamma-\Gamma_0'),
+\end{align}
+where $\Gamma_0'$ is the average over all possible binding energies with given trailer sequence. In general, this average is close to the neutral mean binding energy $\Gamma_0$. Then, the total mutation drift sums to
+\begin{equation}
+	m^\Gamma=-\left(\mu\frac{n}{n-1}+\rho\frac{\beta}{\beta-1}\right)\left(\Gamma-\Gamma_0\right).
+\end{equation}
+In the case if equal alphabet sizes of trailer and driver, the mutation drift takes the simple form
+	\begin{equation}
+	m^\Gamma=-\frac{n}{n-1}\mu\left(1+\kappa\right)\left(\Gamma-\Gamma_0\right)\label{equ:mut_drift_end},
+	\end{equation}
+	with the non-equilibrium parameter $\kappa=\rho/\mu$. If there are different alphabet sizes, then rescaling one of the mutation rates will give the same result.
+
+
+
+
+\clearpage
+\paragraph*{Supplementary Methods~3}
+\label{supp3}
+{\bf{Mutation-Selection-Balance and Non-Equilibrium.}}\\ \\
+The time evolution of the mean binding energy is given by \cite{held2019}
+
+\begin{equation}
+	\dot{\Gamma}=m^\Gamma+\Delta_E f'(\Gamma)+\chi_\Gamma(t),
+\end{equation}
+
+\noindent with $m^\Gamma = -\frac{n}{n-1}\mu(1+\kappa) (\Gamma - \Gamma_0)$, where the mutation rate $\mu$ is the absolute mutation per position.
+The mutation selection balance (MSB) is the deterministic fix point of this equation $\dot{\Gamma}_{\mathrm{MSB}}=0$. In the low mutation rate regime, 
+the diversity within a population $\Delta_E$ is given by the neutral expectation, $\Delta_E=\mu N l$ (\purple{This is from Armita's paper. Is this true 
+for all Alphabet sizes, or do we need to rescale this somehow? For this calculation, I will assume that this term scales with the alphabet size the same 
+way the mutational drift does. However, the scalings are perfect, if $\Delta_E\sim\left(\frac{n}{n-1}\right)^2$. So that is what I am going to do for now 
+in these notes, but please double check this}). With the mutation drift from equation \ref{equ:mut_drift_end}, we get (\purple{Added $\beta^{-2}$ to have matching units, maybe refine something here such that this is not an issue.})
+
+\begin{equation}
+	0=-\frac{n}{n-1}\mu\left(1+\kappa\right)\left(\Gamma_{\mathrm{MSB}}-\Gamma_0\right)+\left(\frac{n}{n-1}\right)^2\mu N l f'(\Gamma_{\mathrm{MSB}})\beta^{-2}.
+	\label{equ:zero}
+\end{equation}
+
+\noindent Note that the MSB is invariant under the limit of a vanishing mutation rate $\mu\rightarrow0$. At close to the upper plateau of the sigmoid fitness 
+landscape the landscape can be approximated by an exponential landscape with derivative
+
+\begin{equation}
+\partial_\Gamma f(\Gamma, l) = -f_0\beta\exp\left[ \beta (\Gamma- (\Gamma_0-\Delta E ))\right],
+\end{equation}
+
+\noindent where $\Gamma_0$ is the mean energy in a population in the absence of selection. In the model of matches and mismatches, this is simply 
+$\Gamma_0=\epsilon 3l/4$ in a four letter alphabet, where $\epsilon$ is the energy contribution of a mismatch.\\
+Then, we can rewrite equation \ref{equ:zero} to retrieve the transcendental equation
+
+\begin{equation}
+	\Gamma_\mathrm{MSB}=\Gamma_0+\frac{1}{\beta}\frac{n}{n-1}\frac{f_0 N}{1+\kappa}\exp\left[-\beta (\Gamma_\mathrm{MSB} -(\Gamma_0-\Delta E) )\right],
+\end{equation}
+
+\noindent which is solved by the ProductLog,
+
+\begin{equation}
+	\Gamma_\mathrm{MSB}(l)=\Gamma_0 - \frac{1}{\beta}\productlog\left(\frac{n}{n-1}\frac{ N f_0 l e^{\beta\Delta E}}{1+\kappa}\right)\label{equ:msb_solution}.
+\end{equation}
+
+\noindent We can rewrite this result in terms of relative number of mismatches $\gamma/\epsilon l$,
+\begin{equation}
+\gamma_\mathrm{MSB}(l) - \gamma_0= -\frac{1}{l\,\epsilon\,\beta} \productlog \left(\frac{n}{n-1}\frac{ N f_0 l e^{\beta\Delta E}}{1+\kappa}\right). \label{equ:intensive_scaling}
+\end{equation}
+
+\noindent Although the ProductLog scales with the binding site length $l$ and the non-equilibrium ratio $\kappa$, we can treat it as a constant (\purple{refer to figure.}).
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{supp4_productlog_scaling.pdf}
+	\caption{Comparing the scaling of equation~(\ref{equ:intensive_scaling}). The Productlog does not influence the scaling by a lot.}\label{fig:prodlog_scaling}
+\end{figure}
+
+\noindent Defining the constant
+
+\begin{equation}
+	l_0 = \frac{1}{\beta\epsilon}\productlog \left(\frac{n}{n-1}\frac{ Nf_0l e^{\beta\Delta E}}{1+\kappa}\right),\label{equ:l0_def}
+\end{equation}
+
+\noindent we can write
+
+\begin{equation}
+\gamma_\mathrm{MSB}(l) - \gamma_0\approx -\frac{l_0}{l}. \label{equ:intensive_scaling2}
+\end{equation}
+
+\noindent Having equation~(\ref{equ:msb_solution}) in hand, we can solve equation~(\ref{equ:zero}) for the fitness derivative at the Mutation-Selection-Balance,
+ $f'\left(\Gamma_\mathrm{MSB}(l)\right)=\hat{f}(l)$,
+
+ \begin{equation}
+	\hat{f}(l) = \beta\frac{n-1}{n}\frac{1+\kappa}{N l}\productlog\left(\frac{n}{n-1}\frac{ Nf_0l\beta e^{\beta\Delta E}}{1+\kappa}\right),
+\end{equation}
+
+\noindent which we can also write as
+
+\begin{equation}
+\hat{f}(l) =  (1+\kappa)\frac{n-1}{n}\frac{l_0}{N l}\beta^2\epsilon, \label{equ:fitness_der_scaling}
+\end{equation}
+
+\noindent In the exponential fitness landscape, the scaled genetic load is given by the derivative of the fitness landscape in respect ot the energy and the length fitness cost,
+
+\begin{equation}
+	\mathcal{L}= 2N\left(-\frac{f'(\Gamma)}{\beta}+f_l\,l.\right).
+\end{equation}
+
+\noindent Also we know, that the deterministic load is equal to the average load,
+
+\begin{equation}
+	\mathcal{L}= 2N\left(-\frac{\hat{f}(l)}{\beta}+f_l\,l\right)
+\end{equation}
+
+\noindent Finally, we can write the genetic load as a function of the driving parameter $\kappa$ and the binding length,
+\begin{equation}
+	\mathcal{L}(l,\kappa)=2(1+\kappa)\epsilon\beta\frac{n-1}{n}\frac{l_0}{l}+\lambda\,\frac{l}{l_0},
+\end{equation} 
+
+\noindent with the scaled fitness cost $\lambda=2Nf_l/l_0$.
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=\linewidth]{supp4_scalings.pdf}
+%	\caption{Note: All these scaling assume that $\Delta_E\sim\left(\frac{n}{n-1}\right)^2$.(A) Mutation selection balance in equilibrium, 
+%	computed as maximum from distributions with Binomal (blue) or Gaussian (green) discrete neutral distribution , compared to prediction from Held 2019. (B) Same as in (A), but for non-equilibrium. (C) Scaling of mutation selection balance of a continuous distribution compared to Held 2019. 
+%	(D) Scaling of genetic Load from sigmoid fitness function, comparing discrete distributions with Held 2019 prediction. (E) Scaling of genetic load of continuous 
+%%	distribution compared to prediction from Held 2019.}
+%\end{figure}
+
+\noindent This load is minimized for given parameters at length
+
+\begin{equation}
+	l_{opt} = l_0\sqrt{\frac{2\epsilon\beta(n-1)}{n\lambda}(1+\kappa)}.
+\end{equation}
+
+
+
+\clearpage
+\paragraph*{Supplementary Methods~4} \label{supp4}
+{\bf{Dynamical Length Evolution.}}\\ \\
+
+\noindent The slow dynamics of binding site length evolution leads to an asymmetry. As shown in equation~(\ref{equ:intensive_scaling2}), the conditional stationary distribution $Q(k|l)$ is peaked at $\gamma-\gamma_0=l_0/l$. We compute the selection coefficients of length mutations in first order, using the expansion of the exponential fitness landscape
+\begin{equation}
+	F(\Gamma, l) = F(\Gamma', l') + (\Gamma-\Gamma') f'(\Gamma', l') + (l-l') \left(\frac{3}{4}\epsilon f'(\Gamma', l') - f_l\right),
+\end{equation}
+where we used $f'(\Gamma', l') = \partial_\Gamma F(\Gamma', l') = 4/3\epsilon \,\partial_l F(\Gamma', l')$.
+The selection coefficients for length mutations are the given by,
+\begin{alignat}{3}
+	& s_+^M    \quad && = F(\Gamma, l+1) - F(\Gamma, l)          \quad && = -f_l - \frac{3}{4}\epsilon\,f'(\Gamma, l),\\
+	& s_+^{MM} \quad && = F(\Gamma+\epsilon, l+1) - F(\Gamma, l) \quad && = -f_l + \frac{1}{4}\epsilon\,f'(\Gamma, l),\\
+	& s_-^M    \quad && = F(\Gamma, l) - F(\Gamma, l+1)          \quad && = f_l + \frac{1}{4}\epsilon\,f'(\Gamma, l),\\
+	& s_-^{MM} \quad && = F(\Gamma-\epsilon, l) - F(\Gamma, l+1) \quad && = f_l - \frac{3}{4}\epsilon\,f'(\Gamma, l),
+\end{alignat}
+where the subscript is indicating increase (+) or decrease mutation (-) and the superscript is indicating whether the mutation is regarding a match($M$) or mismatch($MM$)
+When adding a position, a match is added with probability 1/4, and mismatch with probability 3/4. The average selection coefficient of a length increase mutation is then given by
+
+\begin{equation}
+	\bar s_+ = \frac{1}{4} s_+^M + \frac{3}{4} s_+^{MM} = -f_l.
+\end{equation}
+
+\noindent When removing a position, the probability of removing a match is equal to the ratio of matches in the binding site $1-\gamma$, hence the average selection coefficient for a decrease mutation is given by 
+
+\begin{equation}
+\bar s_- = \gamma s_-^{MM} + (1-\gamma) s_-^{M} = f_l - (\gamma - \gamma_0)f'(\Gamma, l)\epsilon.
+\end{equation}
+
+\noindent Now we can insert equations~(\ref{equ:intensive_scaling2}) and (\ref{equ:fitness_der_scaling}). Then, the scaled selection coefficients $\sigma = 2Ns$ are given by
+\begin{align}
+	\sigma_+ &= -\frac{\lambda}{l_0},\\
+	\sigma_- &= \frac{\lambda}{l_0} - 2\left(\frac{l_0}{l}\right)^2\frac{n-1}{n}(1+\kappa)\beta^2\epsilon^2.
+\end{align}
+
+\noindent Here we can see the asymmetry of length mutations. Length increase mutations are only constrained by the small fitness cost of each position, with $\sigma_-\sim 1/l_0$ (near-neutral evolution), while length decrease mutations  are marginally constrained by conservation of site function with $\sigma_+ \sim l_0^2/l^2\sim 1$ (marginal selection). We can write the selection coefficients as derivatives of the load,
+
+\begin{align}
+	\sigma_+ &= -\frac{\partial \mathcal{L}_l}{\partial l},\\
+	\sigma_- &= l_0\frac{\partial \mathcal{L}_\kappa}{\partial l}\purple{\epsilon\beta} +\frac{\partial \mathcal{L}_l}{\partial l}.
+\end{align}
+
+\noindent \purple{We have this extra factor of $\epsilon\beta$, which is a factor of 2. Let's see if we can get rid of it somehow? Equation \ref{equ:intensive_scaling2} might be the right equation to do so.} Due to the separation of timescales, we can compute a steady state distribution of binding lengths $P(l)$. This distribution is obeying detailed balance, therefore we can compute
+
+\begin{equation}
+	\frac{P(l)}{P(l+1)}= \frac{u_-(l+1)}{u_+(l)},
+\end{equation}
+
+\noindent where $u_+$ is the length increase substitution rate and $u_-$ is the length decrease mutation rate. In first order we can rate the ratio of the to rates as 
+
+\begin{align}
+	\frac{u_-(l+1)}{u_+(l)} &= \frac{\exp(\sigma_+/2)}{\exp(\sigma_-/2)} + \mathcal{O}(\sigma^2),\\
+	&\simeq\exp\left[ -\frac{l_0\beta\epsilon}{2}\left( \mathcal{L}_\kappa(l+1) - \mathcal{L}_\kappa(l) \right) - \left( \mathcal{L}_\lambda(l+1) - \mathcal{L}_\lambda(l) \right)\right],\\
+	&=\exp\left[ \mathcal{F}_\mathrm{eff}(l+1) - \mathcal{F}_\mathrm{eff}(l) \right],
+\end{align}
+
+\noindent which the scaled effective potential
+
+\begin{equation}
+	\mathcal{F}_\mathrm{eff}(l) = -\epsilon\beta\frac{l_0}{2}\mathcal{L}_\kappa(l) - \mathcal{L}_\lambda (l).
+\end{equation}
+
+\noindent These rates define an equilibrium distribution 
+
+\begin{equation}
+	Q(l) \sim \exp\left[ \mathcal{F}_\mathrm{eff}(l) \right],
+\end{equation}
+
+\noindent which is peaked at 
+
+\begin{equation}
+	l_{opt} = l_0\epsilon\beta\sqrt{\frac{l_0}{2}\frac{2(n-1)}{n\lambda}(1+\kappa)}.
+\end{equation}
+
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[]{supp5_l_opt_comparison.pdf}
+%	\caption{}
+%	\label{fig:supp5_opt_length_comp}
+%\end{figure}
+
+
+
+
+\clearpage
+\outcomment{
+To compute length substitution rates, we have to consider all possible energies at which a length mutation can occur, since at each energy there is different 
+selection coefficient. Added elements are random and therefore the probability of adding a match is $1/4$. The 
+probability of a match being removed depends on the ratio of matches in the binding site, $k/l$.
+\begin{align}
+u_+(l)=&N\nu\sum_{k}\left[\frac{1}{4}p\left(s^+_m(k,l)\right)+\frac{3}{4}p\left(s^+_{mm}(k,l)\right)\right]Q(k|l),\label{equ:up_rate}\\
+u_-(l)=&N\nu\sum_{k}\left[\frac{k}{l}p\left(s^-_m(k,l)\right)+\left(1-\frac{k}{l}\right)p\left(s^-_{mm}(k,l)\right)\right]Q(k|l),\label{equ:down_rate}
+\end{align}
+where $\nu$ is the length mutation rate, $N$ is the population and $p(s)$ the Kimura fixation probability for selection coefficient $s$. The selection coefficients are
+\begin{align*}
+	s_m^+&=f(k+1,l+1)-f(k,l) &\text{match addition},\\
+	s_{mm}^+&=f(k,l+1)-f(k,l) &\text{mismatch addition},\\
+	s_m^-&=f(k-1,l-1)-f(k,l) &\text{match removal},\\
+	s_{mm}^-&=f(k,l-1)-f(k,l) &\text{mismatch removal}.
+\end{align*}
+Between each length mutation, the binding sites relax to the steady state distribution for fixed length, $Q(k|l)$ (\textcolor{blue}{hier vielleicht plot von steady state distribution und k's vor mutations}). With the substitution rates in hand, we can compute a steady state distribution $P(l)$ for binding lengths using detailed balance (\textcolor{blue}{steady state = equilibrium in 1D}),
+\begin{equation}
+u_+(l)P(l)=u_-(l+1)P(l).\label{equ:det_bal}
+\end{equation}
+The stationary length distribution is also the result of a marginalization of the two dimensional probability,
+\begin{align}
+&Q(k,l)=\frac{1}{Z}Q_0(k,l)\exp\left[2NF(k,l)\right]\\
+&\Rightarrow P(l) = \frac{1}{Z}\sum_{k=0}^{l}Q(k,l).
+\end{align}
+Evolutionary distributions can usually be written as exponential of a potential, $P(l)\sim e^{-\beta F_\mathrm{eff}(l)}$, which we can compute using the substitution rates,
+\begin{equation}
+	F_\mathrm{eff}(l)=\sum_{i=1}^{l-1}\log\frac{u_+(i)}{u_-(i+1)}+c.
+\end{equation}
+In the absence of any fitness landscape, $f_l=0$ and $f_0=0$, there is no preferred binding length, and the length distribution is uniform, $P(l)=P_0(l)=1/Z$. In the case of neutral binding, i.e., $f_0=0$, the fitness landscape is simply linear in length. Therefore the length distribution is simply an exponential distribution, following from (\textcolor{blue}{find citation})
+\begin{equation}
+	P(l)=P_0(l)\exp(2NF(l))\sim \exp(-2Nf_l\,l)
+\end{equation}
+
+\vspace{3cm}
+\textcolor{purple}{Now we do the whole thing again, but using the approximation using only the predicted peak from the previous section. This allows us to neglect the part of the distribution which is on the lower fitness plateau and anyways not part of the previous calculation,
+\begin{align}
+u_+(l)=&N\nu \left[ \frac{1}{4} p\left(s^+_m \right) + \frac{3}{4} p\left(s^+_{mm} \right) \right], \label{equ:up_rate2}\\
+u_-(l)=&N\nu\left[(1-\gamma) p\left(s^-_m \right) + \gamma p\left(s^-_{mm}\right)\right].\label{equ:down_rate2}
+\end{align}
+We computed the selection coefficients up to second order in the previous section, and are going to use them here to compute the forward and backward rates.
+}
+}
+
+\end{document}

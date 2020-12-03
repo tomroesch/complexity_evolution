@@ -1,0 +1,27 @@
+\subsubsection*{Fitness Model}
+    We are considering systems where the fitness is proportional to the binding of a single molecule to its functional site, such as a transcription factor to its operator. In thermodynamic equilibrium, the binding probability for this system is \cite{lassig2007}
+	\begin{equation}
+		p_+(E)=\frac{1}{1+e^{\beta\,(E-F_0)}},
+    \end{equation}
+    where $F_0$ is the free energy of a random genome. This function has a sigmoid shape, which can approximated as an exponential function close to one of the plateaus. In analytical computations we often approximate high binding probability plateau as $p_+(E) \sim (1-e^{\beta\,(E-F_0)})$. In addition, we consider the fitness effect of the binding site length. Generally, we assume that longer binding sites come with an increased fitness cost, since genome size is under selection especially in prokaryotes (\purple{citation}). Therefore, we include a linear fitness cost $f_l$ per position of the binding site to the system,
+    \begin{equation}
+        F(E,l) = f_0p_+(E,l)-f_l\,l,\label{equ:fitness_function}
+    \end{equation}
+    where $f_0$ is the proportionality factor between binding probability to fitness. Note that the linear fitness cost for binding site length does not influence the dynamics of binding sites of fixed length, since the term maintains constant and selection coefficients are calculated as fitness differences, therefore canceling any constant additional term.
+
+\subsubsection*{Binding Energy Model}
+    We assume a minimal energy model, where each position contributes independently to the total binding energy of the sequence, which is called the independent nucleotide approximation and commonly used for Protein-DNA interactions \cite{stormo1998specificity,djordjevic2007selex}. Therefore, we assume that minimal binding energy is achieved by a reference sequence, and each mismatch from that sequence brings a fixed cost to the binding energy of about $\epsilon\beta\approx 2-3$ \cite{lassig2007}. In this work we fix the energy cost per mismatch to be $\epsilon\beta=2$, independent of the actual nucleotide at the position. For specific examples, there are methods to obtain real energy matrices that make it possible to compute the actual binding energy of a transcription factor to its binding site (\purple{citation}).\\
+    Due to the linearity of the model, the total binding energy will increase with the length of the binding site, for both unspecific and specific sequences. We assume that the total number of unspecific binding site maintains constant, hence, the free energy difference $\Delta E$ that is required to acquire specificity compared to off target binding sites maintains constant as well,
+    \begin{equation}
+		\Delta E  = E_0(l) - E^*(l),
+	\end{equation}
+    where we relabeled the free energy threshold in the sigmoid fitness landscape as $E^*(l)$ and $E_0(l) = 3/4 l\epsilon$, since a random sequence has $1/4\, l$ just by chance. The free energy threshold is $\Delta E=10 k_B T$ (\purple{argue either from minimal length of binding site or other source}).
+    
+
+	\subsubsection*{Genetic Load and Length}
+	One measure of adaption is the genetic load, which is computed as the difference of the mean fitness of a population to the maximal achievable fitness. Using the exponential approximation of the upper plateau of the binding term in the fitness landscape, the genetic load is simply given as the derivative of the fitness landscape evaluated at the mean energy $\mathcal{L} = \beta |f'(\Gamma)|$ \cite{held2019}. The time evolution of the trait mean is given by the stochastic equation
+	\begin{equation}
+		\dot{\Gamma}=m^\gamma+\Delta_E f'(\Gamma)+\chi_\Gamma(t),
+    \end{equation}
+    where 
+	\subsubsection*{Mutation model}
