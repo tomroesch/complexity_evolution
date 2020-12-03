@@ -28,6 +28,7 @@ rho_array = [0, 0.1, 0.5, 1]      # Driver mutation rates
 l_array = [10, 15, 20]           # Binding site lengths
 f0_array = [20, 50, 100] ./ 2N    # Fitness scales
 fl = 0
+rescue = true
 
 
 
@@ -38,7 +39,7 @@ F0 = deepcopy(Gamma_results)
 
 
 # Function to run one simulation
-@everywhere function run(N, f0, fl, rho, nu, l_0, emat, steps)
+@everywhere function run(N, f0, fl, rho, nu, l_0, emat, steps, rescue)
     # Initiate population
     pop = Jevo.mono_pop(N=1000, l=l_0)
     Jevo.initiate!(pop, opt=true)
@@ -55,6 +56,9 @@ F0 = deepcopy(Gamma_results)
         if length(pop.seqs) < 7
             Jevo.initiate!(pop, opt=true)
         end
+        if rescue && (Jevo.get_energy(pop, emat) > 3/4 - 5/2l_0)
+            Jevo.initiate!(pop, opt=true)
+        end
     end
     return Jevo.get_energy(pop, emat)
 end
@@ -69,6 +73,7 @@ open(date*"_script1_sub_METADATA.txt", "a") do io
     write(io, "rho=$rho_array\n")
     write(io, "nu=$nu\n")
     write(io, "l=$l_array\n")
+    write(io, "rescue=$rescue\n")
 end
 
 
@@ -79,7 +84,7 @@ end
         for l in 1:length(l_array)
             for r in 1:length(f0_array)
                 f = Jevo.fermi_fitness(f0=f0_array[r], l=l_array[l])
-                Gamma_results[i, l, r, j] = run(N, f0_array[r], fl, rho_array[i], nu, l_array[l], emat, steps)
+                Gamma_results[i, l, r, j] = run(N, f0_array[r], fl, rho_array[i], nu, l_array[l], emat, steps, rescue)
                 RHO[i, l, r, j] = rho_array[i]
                 L[i, l, r, j] = l_array[l]
                 F0[i, l, r, j] = f0_array[r]
