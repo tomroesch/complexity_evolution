@@ -1,4 +1,4 @@
-using CSV, DataFrames, Distributed, Dates, LinearAlgebra, Jevo, Distributions, DelimitedFiles
+using CSV, DataFrames, Distributed, Dates, LinearAlgebra, Jevo, Distributions, DelimitedFiles, LambertW
 using SharedArrays, TimerOutputs
 # Get date to append to output file
 date = Dates.format(Dates.today(), "yyyy_mm_dd")
@@ -17,6 +17,7 @@ end
     using DelimitedFiles
     using SharedArrays
     using LambertW
+    using LinearAlgebra
 end
 
 # Parameters
