@@ -36,6 +36,8 @@ end
 
     l0_kappa(kappa, l) = 1/2 * lambertw(2 * ϵ^2 * N * l * f0 * (n-1)/n^2 * exp(10)/(1+kappa))
     fl(l_opt) = l0_kappa(0, 10)/l_opt^2 * n^2 / (n-1) * 1/ϵ
+
+    F = Jevo.fermi_fitness(f0=f0, fl=fl(10)/2N)
 end
 
 
@@ -45,7 +47,7 @@ rho_list = SharedArray{Float64, 2}(length(rho), reps)
 
 
 # Function to run one simulation
-@everywhere function run(N, f0, fl, rho, nu, l_0, emat, steps)
+@everywhere function run(N, rho, nu, l_0, emat, steps)
     # Initiate population
     pop = Jevo.mono_pop(N=100, l=l_0)
     Jevo.initiate!(pop, opt=true)
