@@ -22,8 +22,8 @@ end
 
 # Parameters
 @everywhere begin
-    reps = 100
-    steps = 1 * 10^6
+    reps = 100  
+    steps = 2 * 10^6
     rho = [0, 0.1, 0.5, 1., 2, 5]
     l_0 = 10
     N = 100
@@ -37,7 +37,7 @@ end
     l0_kappa(kappa, l) = 1/2 * lambertw(2 * ϵ^2 * N * l * f0 * (n-1)/n^2 * exp(10)/(1+kappa))
     fl(l_opt) = l0_kappa(0, 10)/l_opt^2 * n^2 / (n-1) * 1/ϵ
 
-    F = Jevo.fermi_fitness(f0=f0, fl=fl(10)/2N)
+    
 end
 
 
@@ -51,6 +51,7 @@ rho_list = SharedArray{Float64, 2}(length(rho), reps)
     # Initiate population
     pop = Jevo.mono_pop(N=100, l=l_0)
     Jevo.initiate!(pop, opt=true)
+    F = Jevo.fermi_fitness(f0=f0, fl=fl(10)/2N)
     for i in 1:steps
         Jevo.bp_substitution!(pop, emat, F)
         if rand() < rho/N
@@ -63,8 +64,8 @@ rho_list = SharedArray{Float64, 2}(length(rho), reps)
         if length(pop.seqs) < 7
             Jevo.initiate!(pop, opt=true)
         end
-        return Jevo.get_energy(pop, emat), length(pop.seqs)
     end 
+    return Jevo.get_energy(pop, emat), length(pop.seqs)
 end
 
 # Write Metadata
