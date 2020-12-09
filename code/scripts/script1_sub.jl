@@ -73,7 +73,7 @@ F0 = deepcopy(Gamma_results)
             Jevo.initiate!(pop, opt=true)
         end
     end
-    return Jevo.get_energy(pop, emat)
+    return Jevo.get_energy(pop, emat), length(pop.seqs)
 end
 
 # Write Metadata
@@ -97,9 +97,8 @@ end
         for l in 1:length(l_array) 
             for r in 1:1
                 f = Jevo.fermi_fitness(f0=f0, l=l_array[l])
-                Gamma_results[i, l, r, j] = run(N, f0, fl, rho_array[i], nu, l_array[l], emat, steps, rescue)
+                Gamma_results[i, l, r, j], L[i, l, r, j] = run(N, f0, fl, rho_array[i], nu, l_array[l], emat, steps, rescue)
                 RHO[i, l, r, j] = rho_array[i]
-                L[i, l, r, j] = l_array[l]
                 F0[i, l, r, j] = f0
             end
         end
