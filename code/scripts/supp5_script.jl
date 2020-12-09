@@ -22,8 +22,8 @@ end
 
 # Parameters
 @everywhere begin
-    reps = 100
-    steps = 1 * 10^6
+    reps = 2
+    steps = 1 * 10^2
     rho = [0, 0.1, 0.5, 1., 2, 5]
     l_0 = 10
     N = 100
@@ -79,34 +79,18 @@ open(date*"_supp5_script_METADATA.txt", "a") do io
     write(io, "l_0=$l_0\n")
 end
 
-to = TimerOutput()
 
-@timeit to "initiation run" begin
-# Run simulation once for Julia
-@sync @distributed for j in 1:nprocs()
-    for r in 1:length(rho)
-        E, L = run(N, f0, fl, rho[r], nu, l_0, emat, 1)
-        E_results[r, j] = E
-        l_results[r, j] = L
-        rho_list[r, j] = rho[r]
-    end
-    println("Run $j done.")
-end
-end
-
-@timeit to "full run"  begin
 # Run simulations and enjoy speed
 @sync @distributed for j in 1:reps
     for r in 1:length(rho)
-        E, L = run(N, f0, fl, rho[r], nu, l_0, emat, steps)
+        E, L = run(N, rho[r], nu, l_0, emat, steps)
         E_results[r, j] = E
         l_results[r, j] = L
         rho_list[r, j] = rho[r]
     end
     println("Run $j done.")
 end
-end
+
 
 df = DataFrame(gamma=[(E_results...)...], l=[(l_results...)...], rho=[(rho_list...)...])
 CSV.write(date * "_supp5_script.csv", df)
-println(to)
