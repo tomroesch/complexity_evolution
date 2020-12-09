@@ -56,6 +56,7 @@ data/RegSeq/sequence_counts/*
 *.cb
 *.cb2
 .*.lb
+*.synctex.gz
 
 ## Intermediate documents:
 *.dvi
