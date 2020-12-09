@@ -1,0 +1,76 @@
+{\bf Scaling of Mutational Drift and Population Diversity with Alphabet Size and Driver mutations.}\\
+Here we use the population genetic notation of quantitative traits \cite{nourmohammad_evolution_2013}, and give a general form of the mutation drift. In addition we compute the contribution of driver mutations to the mutation drift.\\
+The frequency of nucleotide $i$ at locus $k$ is given by $y_k^i$. The mutation drift of trailer mutations is therefore given by
+
+\begin{equation}
+m^{\Gamma}|_a=\sum_{k=1}^{l}\sum_{i>j}^{n}\mu_{j\rightarrow i}\Delta_{j\rightarrow i}(y_k^i-y_k^j),
+\end{equation}
+
+\noindent where $ \mu_{j\rightarrow i}$ is the mutation rate from nucleotide $j$ to nucleotide $i$ and $\Delta_{j\rightarrow i}$ is the energy difference of nucleotide $j$ to $i$, $\Delta_{j\rightarrow i}=\epsilon_j-\epsilon_i$. In the absence of any mutational bias, the mutation rates are equal, $\mu_{j\rightarrow i}=\mu/n-1$, where $\mu$ is the total mutation rate per position. Note that self mutations are excluded by definition. Inserting into the expression,
+\begin{equation}
+	m^\Gamma|_a=\frac{\mu}{n-1}\sum_{k=1}^{l}\sum_{i>j}^{n}(\epsilon_k^j-\epsilon_k^i)(y_k^i-y_k^j),
+\end{equation}
+we can multiply out the brackets to
+\begin{equation}
+		m^\Gamma|_a=\frac{\mu}{n-1}\sum_{k=1}^{l}\left((1-n)\sum_{j=1}^{n}\epsilon_k^jy_k^j+\sum_{i=1}^{n}\epsilon_k^i\sum_{j\neq i}^{n}y_k^j\right).
+\end{equation}
+Now we use $\sum_{i}y_k^i=1$, such that we can write $\sum_{j\neq i}^{n}y_k^j = 1 - y_k^i$,
+\begin{align}
+m^{\Gamma}|_a&=\frac{\mu}{n-1}\sum_{k=1}^{l}\left((1-n)\sum_{i=1}^{n}\epsilon_k^jy_k^j+\sum_{i=1}^{n}\epsilon_k^i(1-y_k^i)\right),\nonumber\\
+&=\frac{\mu}{n-1}\sum_{k=1}^{l}\left(-n\sum_{i=1}^{n}\epsilon_k^jy_k^j+\sum_{i=1}^{n}\epsilon_k^i\right).
+\end{align}
+The mean trait value is given by $\Gamma=\sum_{k=1}^l\sum_{i=1}^{n}E_iy_k^j$, and the neutral mean value by $\Gamma_0=\frac{1}{n}\sum_{k=1}^l\sum_{i=1}^nE_i$, therefore the mutation drift from trailer mutations is given by
+\begin{equation}
+	m^{\Gamma}|_a=-\mu\frac{n}{n-1}\left(\Gamma-\Gamma_0\right)
+\end{equation}
+In our model driver mutations occur as substitutions, therefore the nucleotide frequencies in the trailer do not change. In general, with the new driver element, each possible nucleotide at that position can have a different contribution to the binding energy. This difference is weighted with the allele frequency of each nucleotide. The energy of nucleotide $i$ with driver element $\alpha$ is denoted by $E^\alpha_i$, the energy at position before the mutation by $E^*_i$. The number of possible driver elements is given by $\beta$, and the mutation rate of driver element $*$ to $\alpha$ by $\rho_{*\rightarrow\alpha}$. Then the contribution to the mutation drift from driver mutations is given by
+\begin{equation}
+m^\Gamma|_\mathbf{b}=\sum_{k=1}^{l}\sum_{\alpha=1}^{\beta}\sum_{i=1}^{n}\rho_{*\rightarrow\alpha}(E^\alpha_i-E^*_i)y_k^i.
+\end{equation}
+Again, we assume that there is no mutational bias, $\rho_{*\rightarrow\alpha}=\rho/(\beta-1)$. We can transform the sum to
+\begin{align}
+	&=-\frac{\rho}{\beta-1}(\beta\Gamma-\sum_{k=1}^{l}\sum_{\alpha=1}^{\beta}\sum_{j=1}^{n}\epsilon_\alpha^jy_k^i),\nonumber\\
+	&=-\rho\frac{\beta}{\beta-1}(\Gamma-\Gamma_0'),
+\end{align}
+where $\Gamma_0'$ is the average over all possible binding energies with given trailer sequence. In general, this average is close to the neutral mean binding energy $\Gamma_0$. Then, the total mutation drift sums to
+\begin{equation}
+	m^\Gamma=-\left(\mu\frac{n}{n-1}+\rho\frac{\beta}{\beta-1}\right)\left(\Gamma-\Gamma_0\right).
+\end{equation}
+In the case if equal alphabet sizes of trailer and driver, the mutation drift takes the simple form
+\begin{equation}
+    m^\Gamma=-\frac{n}{n-1}\mu\left(1+\kappa\right)\left(\Gamma-\Gamma_0\right)\label{equ:mut_drift_end},
+\end{equation}
+with the non-equilibrium parameter $\kappa=\rho/\mu$. If there are different alphabet sizes, then rescaling one of the mutation rates will give the same result. This result can be confirmed by numeric simulations by observing the time evolution of the mean energy of a population over time in the absence of fitness. Then, the deterministic (neglecting stochastic fluctuations) time evolution of the mean is given by
+\begin{equation}
+    \dot\Gamma=m^\Gamma,
+\end{equation}
+which has the analytical solution
+\begin{equation}
+    \Gamma(t) = \Gamma_0 + (\Gamma_i - \Gamma_0)e^{-\frac{n}{n-1}\mu\left(1+\kappa\right)\, t}. 
+\end{equation}
+In figure \ref{fig:drift_scaling_n_rho} we can see (\purple{add figure description}).
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{drift_scaling_n_rho.pdf}
+    \caption{Time evolution of mean and variance of populations in numeric simulations. Populations were initiated at $\Gamma_i=0$, and run for 50000 generations with $N=1000$, $\mu = 1/N$, $l=10$ and $\kappa= 0,\,0.5,\,1,\,5$ (blue, orange, green, red). Dashed lines show expected theoretical prediction.}
+    \label{fig:drift_scaling_n_rho}
+\end{figure}\\
+
+\noindent In addition to the drift of the mean, we look at the scaling of the diversity within a population for various alphabet sizes and non-equilibrium ratios. From the simulations in figure \ref{fig:drift_scaling_n_rho}, we already see that the diversity in steady state is the same for all tested non-equilibrium ratios. Since a substitution in the driver sequence changes the preferred nucleotide for each species, there is no significant change in the diversity within the population. To study the dependence on the alphabet size, we have to consider the effect mutation rate, that is the rate at which the binding energy changes, which differs if the alphabet is bigger than binary. Given that the total mutation rate per position is $\mu$, the trait changing mutation rate is also $\mu$ if the position is a match, since any mutation will lead to a mismatch. However, if the position is a mismatch, then only one out of $n-1$ possible mutations leads to a trait change. Therefore, the average trait changing mutation rate $\tilde \mu$ is given by
+\begin{equation}
+    \tilde \mu = \frac{\Gamma}{l} \frac{\mu}{n-1} + \left(1 - \frac{\Gamma}{l} \right) \mu.
+\end{equation}
+In the absence of fitness, the steady state mean binding energy is $\Gamma=\Gamma_0=1-1/n$, therefore the trait changing mutation rate is given by $\tilde \mu = 2\mu/n$. Then, the trait diversity within a population at steady state is given by 
+\begin{equation}
+    \Delta_E = \frac{2}{n}\mu Nl\epsilon^2
+\end{equation}
+In figure~\ref{fig:variance_scaling_n} the diversity within populations is shown as a function of alphabet size. The endpoints from the same simulations shown in figure~\ref{fig:drift_scaling_n_rho} fit the prediction well.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=75mm]{variance_scaling_n.pdf}
+    \caption{Scaling of diversity within a population for various alphabet sizes and non-equilibrium ratios $\rho= 0,\,0.5,\,1,\,5$ (blue, orange, green, red). Dashed gray line shows theoretical prediction.}
+    \label{fig:variance_scaling_n}
+\end{figure}
+
+
