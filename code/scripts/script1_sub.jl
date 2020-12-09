@@ -55,7 +55,7 @@ F0 = deepcopy(Gamma_results)
     # Initiate population
     pop = Jevo.mono_pop(N=N, l=l_0)
     Jevo.initiate!(pop, opt=true)
-    f = Jevo.fermi_fitness(f0=f0, fl=fl(10))
+    f = Jevo.fermi_fitness(f0=f0, fl=fl(10)/2N)
 
     for i in 1:steps
         Jevo.bp_substitution!(pop, emat, f)
