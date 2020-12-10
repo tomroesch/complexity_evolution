@@ -22,7 +22,7 @@ end
 
 # Parameters
 @everywhere begin
-    reps = 100  
+    reps = 200  
     steps = 2 * 10^6
     rho = [0, 0.1, 0.5, 1., 2, 5]
     l_0 = 10
@@ -62,7 +62,7 @@ rho_list = SharedArray{Float64, 2}(length(rho), reps)
             Jevo.l_substitution!(pop, emat, F)
         end
         # Recover lost sites
-        if length(pop.seqs) < 7
+        if length(pop.seqs) < 6
             Jevo.initiate!(pop, opt=true)
         end
     end 
