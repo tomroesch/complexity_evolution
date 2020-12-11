@@ -5,9 +5,9 @@ The time evolution of the mean binding energy is given by \cite{held_survival_20
 	\dot{\Gamma}=m^\Gamma+\Delta_E f'(\Gamma)+\chi_\Gamma(t),
 \end{equation}
 
-\noindent with $m^\Gamma = -\frac{n}{n-1}\mu(1+\kappa) (\Gamma - \Gamma_0)$ and $\Delta_E = \frac{2}{n}\mu Nl\epsilon^2$ (derived supplementary methods 2), where the mutation rate $\mu$ is the absolute mutation per position. The mutation selection balance (MSB) is the deterministic fix point of this equation $\dot{\Gamma}_{\mathrm{MSB}}=0$. With the mutation drift from equation \ref{equ:mut_drift_end}, we get
+\noindent with $m^\Gamma = -\frac{n}{n-1}\mu(1+\kappa) (\Gamma - \Gamma_0)$ and $\Delta_E = \frac{2\mu Nl\epsilon^2}{n}$ (derived supplementary methods 2), where the mutation rate $\mu$ is the absolute mutation per position. The mutation selection balance (MSB) is the deterministic fix point of this equation $\dot{\Gamma}_{\mathrm{MSB}}=0$. With the mutation drift from equation \ref{equ:mut_drift_end}, we get
 \begin{equation}
-	0=-\frac{n}{n-1}\mu\left(1+\kappa\right)\left(\Gamma_{\mathrm{MSB}}-\Gamma_0\right)+\frac{2}{n}\mu N l \epsilon^2 f'(\Gamma_{\mathrm{MSB}}).
+	0=-\frac{n}{n-1}\mu\left(1+\kappa\right)\left(\Gamma_{\mathrm{MSB}}-\Gamma_0\right)+\frac{2\mu N l \epsilon^2}{n} f'(\Gamma_{\mathrm{MSB}}).
 	\label{equ:zero}
 \end{equation}
 Note that the MSB is invariant under the limit of a vanishing mutation rate $\mu\rightarrow0$. At close to the upper plateau of the sigmoid fitness 
@@ -19,28 +19,28 @@ where $\Gamma_0$ is the mean energy in a population in the absence of selection.
 $\Gamma_0=\epsilon 3l/4$ in a four letter alphabet, where $\epsilon$ is the energy contribution of a mismatch.\\
 Then, we can rewrite equation \ref{equ:zero} to retrieve the transcendental equation
 \begin{equation}
-	\Gamma_\mathrm{MSB}=\Gamma_0+\frac{2(n-1)}{n^2}\frac{1}{1+\kappa}Nl\epsilon^2\beta\exp\left[-\beta (\Gamma_\mathrm{MSB} -(\Gamma_0-\Delta E) )\right],
+	\Gamma_\mathrm{MSB}=\Gamma_0+\frac{(n-1)}{n^2}\frac{1}{1+\kappa}2Nl\epsilon^2\beta\exp\left[-\beta (\Gamma_\mathrm{MSB} -(\Gamma_0-\Delta E) )\right],
 \end{equation}
 which is solved by the ProductLog,
 \begin{equation}
-	\Gamma_\mathrm{MSB}(l)=\Gamma_0 - \frac{1}{\beta}\productlog\left(2 \frac{n-1}{n^2}\frac{ N f_0 l \epsilon^2 \beta^2e^{\beta\Delta E}}{1+\kappa}\right)\label{equ:msb_solution}.
+	\Gamma_\mathrm{MSB}(l)=\Gamma_0 - \frac{1}{\beta}\productlog\left(\frac{n-1}{n^2}\frac{ 2N f_0 l \epsilon^2 \beta^2e^{\beta\Delta E}}{1+\kappa}\right)\label{equ:msb_solution}.
 \end{equation}
 We can rewrite this result in terms of relative number of mismatches $\gamma/\epsilon l$,
 \begin{equation}
-\gamma_\mathrm{MSB}(l) - \gamma_0= -\frac{1}{l\,\epsilon\,\beta} \productlog\left(2 \frac{n-1}{n^2}\frac{ N f_0 l \epsilon^2 \beta^2e^{\beta\Delta E}}{1+\kappa}\right). \label{equ:intensive_scaling}
+\gamma_\mathrm{MSB}(l) - \gamma_0= -\frac{1}{l\,\epsilon\,\beta} \productlog\left( \frac{n-1}{n^2}\frac{ 2N f_0 l \epsilon^2 \beta^2e^{\beta\Delta E}}{1+\kappa}\right).
 \end{equation}
 Although the ProductLog scales with the binding site length $l$ and the non-equilibrium ratio $\kappa$, we can treat it as a constant,
 \begin{equation}
-	l_0 = \frac{1}{\beta\epsilon}\productlog\left(2 \frac{n-1}{n^2}\frac{ N f_0 l \epsilon^2 \beta^2e^{\beta\Delta E}}{1+\kappa}\right).\label{equ:l0_def}
+	l_0 = \frac{1}{\beta\epsilon}\productlog\left( \frac{n-1}{n^2}\frac{ 2N f_0 l \epsilon^2 \beta^2e^{\beta\Delta E}}{1+\kappa}\right).\label{equ:l0_def}
 \end{equation}
 Now we can write
 \begin{equation}
-\gamma_\mathrm{MSB}(l) - \gamma_0\approx -\frac{l_0}{l}. \label{equ:intensive_scaling2}
+\gamma_\mathrm{MSB}(l) - \gamma_0\approx -\frac{l_0}{l}. \label{equ:intensive_scaling}
 \end{equation}
 Having equation~(\ref{equ:msb_solution}) in hand, we can solve equation~(\ref{equ:zero}) for the fitness derivative at the Mutation-Selection-Balance,
  $f'\left(\Gamma_\mathrm{MSB}(l)\right)=\hat{f}(l)$,
  \begin{equation}
-	\hat{f}(l) = -\frac{1}{\epsilon}\frac{n^2}{2(n-1)}\frac{1+\kappa}{N l}l_0.
+	\hat{f}(l) = -\frac{1}{\epsilon}\frac{n^2}{(n-1)}\frac{1+\kappa}{2N l}l_0. \label{equ:fitness_deriv}
 \end{equation}
  In the exponential fitness landscape, the scaled genetic load is given by the derivative of the fitness landscape in respect ot the energy and the length fitness cost,
 \begin{equation}

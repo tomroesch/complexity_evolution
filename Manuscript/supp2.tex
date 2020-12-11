@@ -1,12 +1,11 @@
-{\bf Scaling of Mutational Drift and Population Diversity with Alphabet Size and Driver mutations.}\\
-Here we use the population genetic notation of quantitative traits \cite{nourmohammad_evolution_2013}, and give a general form of the mutation drift. In addition we compute the contribution of driver mutations to the mutation drift.\\
-The frequency of nucleotide $i$ at locus $k$ is given by $y_k^i$. The mutation drift of trailer mutations is therefore given by
+\textbf{Scaling of Mutational Drift and Population Diversity with Alphabet Size and Driver mutations.}\\
 
+\noindent Here we use the population genetic notation of quantitative traits \cite{nourmohammad_evolution_2013}, and give a general form of the mutation drift. In addition we compute the contribution of driver mutations to the mutation drift.\\
+The frequency of nucleotide $i$ at locus $k$ is given by $y_k^i$. The mutation drift of trailer mutations is therefore given by
 \begin{equation}
 m^{\Gamma}|_a=\sum_{k=1}^{l}\sum_{i>j}^{n}\mu_{j\rightarrow i}\Delta_{j\rightarrow i}(y_k^i-y_k^j),
 \end{equation}
-
-\noindent where $ \mu_{j\rightarrow i}$ is the mutation rate from nucleotide $j$ to nucleotide $i$ and $\Delta_{j\rightarrow i}$ is the energy difference of nucleotide $j$ to $i$, $\Delta_{j\rightarrow i}=\epsilon_j-\epsilon_i$. In the absence of any mutational bias, the mutation rates are equal, $\mu_{j\rightarrow i}=\mu/n-1$, where $\mu$ is the total mutation rate per position. Note that self mutations are excluded by definition. Inserting into the expression,
+where $ \mu_{j\rightarrow i}$ is the mutation rate from nucleotide $j$ to nucleotide $i$ and $\Delta_{j\rightarrow i}$ is the energy difference of nucleotide $j$ to $i$, $\Delta_{j\rightarrow i}=\epsilon_j-\epsilon_i$. In the absence of any mutational bias, the mutation rates are equal, $\mu_{j\rightarrow i}=\mu/n-1$, where $\mu$ is the total mutation rate per position. Note that self mutations are excluded by definition. Inserting into the expression,
 \begin{equation}
 	m^\Gamma|_a=\frac{\mu}{n-1}\sum_{k=1}^{l}\sum_{i>j}^{n}(\epsilon_k^j-\epsilon_k^i)(y_k^i-y_k^j),
 \end{equation}
