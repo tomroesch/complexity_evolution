@@ -1,5 +1,5 @@
 N=100
-f0=3.0
+f0=1.5
 fl=fl
 repetitions=200
 steps=20000000
