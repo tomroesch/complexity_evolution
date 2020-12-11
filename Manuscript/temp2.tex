@@ -222,18 +222,17 @@
 
 
 	\subsubsection*{Optimal Binding Site Length}
-	{\color{ForestGreen} This section needs to be brought on par with the methods section. The part about genetic load from Torsten/Daniel paper should be in the methods, and everything on top of that should be described in this section. Discuss possible regimes of $\kappa$ in biological systems, but maybe this should be done in a different section.}\\
-	First, we compute the binding site length which minimizes the genetic load, therefore being the fittest and is expected to be the steady state that binding site lengths are evolving towards.
-	Non-equilibrium weakens the ability to find specific binding sites, while the length fitness cost is independent of the state of the binding. Hence, the fitness trade-off changes with the level of non-equilibrium. We can consider the fitness effects in the terms of genetic load. For weak non-equilibrium most sites are functional and are at the edge of the upper fitness plateau, which can approximated by an exponential tail. Then the genetic load of a population is given by $\mathcal{L}\sim \left|\frac{\partial}{\partial \Gamma} f(\Gamma,l)\right|+f_l\,l$. The average load across populations is given by the load at the deterministic mutation-selection balance $\hat{\Gamma}$(Methods or Supplementary) (\textcolor{blue}{Cite Torsten and Daniel Paper}). We retrieve two terms for the genetic load, with different scalings of the binding length. The linear fitness cost for binding length, and the binding probability term with scales inversely with binding length,
+	In this section we discuss how the genetic load can be minimized by adapting the length of the binding site in non-equilibrium. The genetic load is defined as the difference of the mean fitness of the population to the maximum achievable fitness. (\purple{Do we need a figure here?}). By minimzing genetic load a population maximizes its fitness. In general increasing the length of genetic element comes with a fitness cost, since more base pairs need to be kept specific to maintain function. Therefore, we include a linear fitness cost to the fitness landscape (Methods). Note, this additional fitness cost does not change dynamics when binding site lengths are kept constant because the term cancels when computing selection coefficients.
+	Non-equilibrium weakens the ability to find specific binding sites, while the length fitness cost is independent of the state of the binding. Hence, the fitness trade-off changes with the level of non-equilibrium. We can consider the fitness effects in the terms of genetic load. For weak non-equilibrium most sites are functional and are at the edge of the upper fitness plateau, which can approximated by an exponential tail. Then the genetic load of a population is given by $\mathcal{L}\sim \left|\frac{\partial}{\partial \Gamma} f(\Gamma,l)\right|+f_l\,l$. The average load across populations is given by the load at the deterministic mutation-selection balance $\hat{\Gamma}$(Methods or Supplementary) \cite{held_survival_2019}. We retrieve two terms for the genetic load, with different scaling of the binding length. The linear fitness cost for binding length, and the binding probability term with scales inversely with binding length,
 	\begin{equation}
 		\mathcal{L} = \xi \frac{l_0}{l}(1+\kappa)+\lambda \, \frac{l}{l_0} = \mathcal{L}_\kappa + \mathcal{L}_\lambda,
 		\label{equ:maintext_load}
 	\end{equation}
-	Where $\xi$ is a combination of various parameters, $\lambda=2Nf_l/l_0\sim 1$ is the scaled fitness cost for length,  and $l_0$ is a length scaling parameter (supplementary methods). A derivation of this equation can be found in the supplementary methods. Due to the trade off between the cost of adding positions to the binding site and reducing load by adding positions, there is an optimal binding site length, which minimizes the total genetic load,
+	Where $\xi$ is a combination of various parameters, $\lambda=2Nf_l/l_0\sim 1$ is the scaled fitness cost for length,  and $l_0$ is a length scaling parameter the derivation of this equation can be found in the supplementary methods. Due to the trade off between the cost of adding positions to the binding site and reducing load by adding positions, there is an optimal binding site length, which minimizes the total genetic load,
 	\begin{equation}
-		l_\text{opt}\sim l_0\sqrt{\frac{1+\kappa}{\lambda}}.
+		l_\mathrm{opt}\sim l_0\sqrt{\frac{1+\kappa}{\lambda}}.
 	\end{equation}
-	In equilibrium, the optimal binding site length is close to the length scaling parameter, $l\sim l_0$.  
+	Hence, we obtain a direct scaling of the optimal binding site length with non-equilibrium. The scaled fitness length cost in the model is chosen such that the binding site length in equilibrium ($\kappa=0$) is ten, $l_\mathrm{opt}(\kappa)=0$, which is the typical length of transcription factor binding sites \cite{stewart_why_2012}. 
 
 
 \subsubsection*{Dynamical Evolution of Binding Site Length}
@@ -258,7 +257,7 @@ Using detailed balance (\purple{Maybe avoid this term here?}), we can compute th
 \end{equation}
 When comparing the maximum of this distribution with the length with minimizes the load, we find that the length $l_opt^*$ which optimizes the effective potential resulting from the dynamical calculation is larger by a factor $\sqrt{l_0}$,
 \begin{equation}
-	l_{opt}^* \simeq \sqrt{l_0}\,l_{opt}.
+	l_{opt}^* = \epsilon\beta\sqrt{l_0}\,l_{opt}.
 \end{equation}
 This is an enormous difference, see Figure~(\purple{insert figure}), and shows how important it is to consider the dynamics of the evolution of binding site lengths. Transcription factor binding sites have lengths around 10bp in prokaryotes (\purple{cite "Why are TF binding sites 10bp long."}), so we can tune the fitness cost for length $f_l$ such that the optimal length computed from the dynamical computation is around that value in equilibrium ($\kappa=0$). Then, we observe an increase in binding site length with increasing non-equilibrium, due to the sites being under more selective pressure to maintain their binding specificity, which shifts the weights in the trade off with the cost of increased binding site length.
 
@@ -479,101 +478,16 @@ Due to the discrete mean binding energies in the low mutation rate limit, select
 \paragraph*{Supplementary Methods~2}
 \label{supp2}
 \input{supp2.tex}
-
-
-
-
 \clearpage
+
 \paragraph*{Supplementary Methods~3}
 \label{supp3}
 \input{supp3.tex}
-
-
-
 \clearpage
-\paragraph*{Supplementary Methods~4} \label{supp4}
-{\bf{Dynamical Length Evolution.}}\\ \\
 
-\noindent The slow dynamics of binding site length evolution leads to an asymmetry. As shown in equation~(\ref{equ:intensive_scaling2}), the conditional stationary distribution $Q(k|l)$ is peaked at $\gamma-\gamma_0=l_0/l$. We compute the selection coefficients of length mutations in first order, using the expansion of the exponential fitness landscape
-\begin{equation}
-	F(\Gamma, l) = F(\Gamma', l') + (\Gamma-\Gamma') f'(\Gamma', l') + (l-l') \left(\frac{3}{4}\epsilon f'(\Gamma', l') - f_l\right),
-\end{equation}
-where we used $f'(\Gamma', l') = \partial_\Gamma F(\Gamma', l') = 4/3\epsilon \,\partial_l F(\Gamma', l')$.
-The selection coefficients for length mutations are the given by,
-\begin{alignat}{3}
-	& s_+^M    \quad && = F(\Gamma, l+1) - F(\Gamma, l)          \quad && = -f_l - \frac{3}{4}\epsilon\,f'(\Gamma, l),\\
-	& s_+^{MM} \quad && = F(\Gamma+\epsilon, l+1) - F(\Gamma, l) \quad && = -f_l + \frac{1}{4}\epsilon\,f'(\Gamma, l),\\
-	& s_-^M    \quad && = F(\Gamma, l) - F(\Gamma, l+1)          \quad && = f_l + \frac{1}{4}\epsilon\,f'(\Gamma, l),\\
-	& s_-^{MM} \quad && = F(\Gamma-\epsilon, l) - F(\Gamma, l+1) \quad && = f_l - \frac{3}{4}\epsilon\,f'(\Gamma, l),
-\end{alignat}
-where the subscript is indicating increase (+) or decrease mutation (-) and the superscript is indicating whether the mutation is regarding a match($M$) or mismatch($MM$)
-When adding a position, a match is added with probability 1/4, and mismatch with probability 3/4. The average selection coefficient of a length increase mutation is then given by
-
-\begin{equation}
-	\bar s_+ = \frac{1}{4} s_+^M + \frac{3}{4} s_+^{MM} = -f_l.
-\end{equation}
-
-\noindent When removing a position, the probability of removing a match is equal to the ratio of matches in the binding site $1-\gamma$, hence the average selection coefficient for a decrease mutation is given by 
-
-\begin{equation}
-\bar s_- = \gamma s_-^{MM} + (1-\gamma) s_-^{M} = f_l - (\gamma - \gamma_0)f'(\Gamma, l)\epsilon.
-\end{equation}
-
-\noindent Now we can insert equations~(\ref{equ:intensive_scaling2}) and (\ref{equ:fitness_der_scaling}). Then, the scaled selection coefficients $\sigma = 2Ns$ are given by
-\begin{align}
-	\sigma_+ &= -\frac{\lambda}{l_0},\\
-	\sigma_- &= \frac{\lambda}{l_0} - 2\left(\frac{l_0}{l}\right)^2\frac{n-1}{n}(1+\kappa)\beta^2\epsilon^2.
-\end{align}
-
-\noindent Here we can see the asymmetry of length mutations. Length increase mutations are only constrained by the small fitness cost of each position, with $\sigma_-\sim 1/l_0$ (near-neutral evolution), while length decrease mutations  are marginally constrained by conservation of site function with $\sigma_+ \sim l_0^2/l^2\sim 1$ (marginal selection). We can write the selection coefficients as derivatives of the load,
-
-\begin{align}
-	\sigma_+ &= -\frac{\partial \mathcal{L}_l}{\partial l},\\
-	\sigma_- &= l_0\frac{\partial \mathcal{L}_\kappa}{\partial l}\purple{\epsilon\beta} +\frac{\partial \mathcal{L}_l}{\partial l}.
-\end{align}
-
-\noindent \purple{We have this extra factor of $\epsilon\beta$, which is a factor of 2. Let's see if we can get rid of it somehow? Equation \ref{equ:intensive_scaling2} might be the right equation to do so.} Due to the separation of timescales, we can compute a steady state distribution of binding lengths $P(l)$. This distribution is obeying detailed balance, therefore we can compute
-
-\begin{equation}
-	\frac{P(l)}{P(l+1)}= \frac{u_-(l+1)}{u_+(l)},
-\end{equation}
-
-\noindent where $u_+$ is the length increase substitution rate and $u_-$ is the length decrease mutation rate. In first order we can rate the ratio of the to rates as 
-
-\begin{align}
-	\frac{u_-(l+1)}{u_+(l)} &= \frac{\exp(\sigma_+/2)}{\exp(\sigma_-/2)} + \mathcal{O}(\sigma^2),\\
-	&\simeq\exp\left[ -\frac{l_0\beta\epsilon}{2}\left( \mathcal{L}_\kappa(l+1) - \mathcal{L}_\kappa(l) \right) - \left( \mathcal{L}_\lambda(l+1) - \mathcal{L}_\lambda(l) \right)\right],\\
-	&=\exp\left[ \mathcal{F}_\mathrm{eff}(l+1) - \mathcal{F}_\mathrm{eff}(l) \right],
-\end{align}
-
-\noindent which the scaled effective potential
-
-\begin{equation}
-	\mathcal{F}_\mathrm{eff}(l) = -\epsilon\beta\frac{l_0}{2}\mathcal{L}_\kappa(l) - \mathcal{L}_\lambda (l).
-\end{equation}
-
-\noindent These rates define an equilibrium distribution 
-
-\begin{equation}
-	Q(l) \sim \exp\left[ \mathcal{F}_\mathrm{eff}(l) \right],
-\end{equation}
-
-\noindent which is peaked at 
-
-\begin{equation}
-	l_{opt} = l_0\epsilon\beta\sqrt{\frac{l_0}{2}\frac{2(n-1)}{n\lambda}(1+\kappa)}.
-\end{equation}
-
-
-%\begin{figure}
-%	\centering
-%	\includegraphics[]{supp5_l_opt_comparison.pdf}
-%	\caption{}
-%	\label{fig:supp5_opt_length_comp}
-%\end{figure}
-
-
-
+\paragraph*{Supplementary Methods~4} 
+\label{supp4}
+\input{supp4.tex}
 
 \clearpage
 \outcomment{
