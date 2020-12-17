@@ -160,29 +160,7 @@
 		* mlaessig@uni-koeln.de
 
 	\end{flushleft}
-	\subsection*{To Do List}
 	
-	\begin{itemize}
-		\color{ForestGreen}
-		\item Urgent:
-		\begin{itemize}
-			\item Michael: Supplementary Methods 3: Does the diversity within a population depend on the alphabet size, as seen from the analytic results? $\Delta E ~\sim \left(\frac{n}{n-1}\right)^2$. This is important for the results in this section. Either mathematical proof or logical explanation.
-			\item Tom: Think about loss at various fitness parameters, and how that relates to observable non-equilibrium.
-			\item Tom: Get a first draft of the methods section ready so it is easy to refer to it when writing the results. The methods should not change too much anymore, unless we include data analysis, but this can be added later.
-			\item Tom: Add conceptual figures (Optimal length scaling with non-equilibrium, effect of ratchet, two dimensional distribution $Q(\gamma, l)$ moving in 2D space with increasing $\kappa$).
-		\end{itemize}
-		\item Remaining Tasks:
-		\begin{itemize}
-			\item Get all necessary simulations done and store results with README.md files to remember what they where.
-			\item Finalize analytical computations in supplementary methods.
-			\item Formulate punchline of the paper.
-			\item Check references.
-			\item Write introduction based on the results.
-			\item Finalize results section.
-			\item Spend \~ one month looking for possible data sets.
-			\item Either add data analysis or write discussion and be done.
-		\end{itemize}
-	\end{itemize}
 	
 	\subsection*{Abstract}
 	
@@ -237,7 +215,8 @@
 
 \subsubsection*{Dynamical Evolution of Binding Site Length}
 {\color{ForestGreen} This section should be very descriptive, since it is one of the main results. And why considering the ratchet is important when writing down models of this kind which could consider binding site length. Also, could this be a reason for larger genomes, as soon as selection pressure decreases? Also, this section should have a minimal number of equations, just tell the story, and any computation should be in the supplementary methods, to make this section as straightforward to understand as possible. }\\
-In a real population, length adaptation is a dynamical process, driven by mutations which include a new position in the sequence in its recognition. We assume these mutations to be very rare compared to other type of mutations, such that the timescales separate. Therefore, we can assume that the system is in the respective steady state of binding energies each time a length mutation occurs. Assuming an alphabet size of 4 and using the match/mismatch energy model (see Methods), a newly added position will be a match with probability 1/4, since it has not been selected for yet and hence is random compared to the driver sequence. Length increase mutations are on average neutral in respect to the adaption term in the fitness landscape in first order, and are only influenced by the fitness cost of length (supplementary methods),
+
+In a real population, length adaptation is a dynamical process, driven by mutations which include a new position in the sequence in its recognition. We assume these mutations to be very rare compared to other type of mutations, such that the timescales separate. Therefore, we can assume that the system is in the respective steady state of binding energies each time a length mutation occurs. Assuming an alphabet size of $n$ and using the match/mismatch energy model (see Methods), a newly added position will be a match with probability 1/4, since it has not been selected for yet and hence is random compared to the driver sequence. Length increase mutations are on average neutral in respect to the adaption term in the fitness landscape in first order, and are only influenced by the fitness cost of length (supplementary methods),
 \begin{equation}
 	\sigma^+ = -\frac{\lambda}{l_0} =-\frac{\partial \mathcal{L}_\lambda}{\partial l}.
 \end{equation}
@@ -263,6 +242,49 @@ This is an enormous difference, see Figure~(\purple{insert figure}), and shows h
 
 \subsubsection*{Data}
 \textcolor{ForestGreen}{Placeholder for a possible section on some data. This has the lowest priority so far, and I think we should finish everything but the discussion before we dive into this.}
+
+
+\subsection*{Discussion}
+\textcolor{ForestGreen}{Here we should discuss the meaning of our results. The two factors of increased binding site length. First, the dynamics of length evolution lead to a much higher binding site length in equilibrium, than observed from minimizing the genetic load. But. Also we should discuss which data could support our theory. And finally, the shortcoming of the theory. Like how the approximation of the distribution is not really good for higher selection coefficients. And what how it could be used to improve. And finally how we think experiments could be set up to test the hypthesis experimentally.}
+
+
+
+\bibliography{complexity_refs.bib}
+
+
+\section*{Acknowledgments}
+
+
+\section*{Author Contributions}
+
+
+\section*{Competing Interests}
+The authors declare no competing interests.
+
+\clearpage
+\subsection*{To Do List}
+	
+\begin{itemize}
+	\color{ForestGreen}
+	\item Urgent:
+	\begin{itemize}
+		\item Michael: Supplementary Methods 3: Does the diversity within a population depend on the alphabet size, as seen from the analytic results? $\Delta E ~\sim \left(\frac{n}{n-1}\right)^2$. This is important for the results in this section. Either mathematical proof or logical explanation.
+		\item Tom: Think about loss at various fitness parameters, and how that relates to observable non-equilibrium.
+		\item Tom: Get a first draft of the methods section ready so it is easy to refer to it when writing the results. The methods should not change too much anymore, unless we include data analysis, but this can be added later.
+		\item Tom: Add conceptual figures (Optimal length scaling with non-equilibrium, effect of ratchet, two dimensional distribution $Q(\gamma, l)$ moving in 2D space with increasing $\kappa$).
+	\end{itemize}
+	\item Remaining Tasks:
+	\begin{itemize}
+		\item Get all necessary simulations done and store results with README.md files to remember what they where.
+		\item Finalize analytical computations in supplementary methods.
+		\item Formulate punchline of the paper.
+		\item Check references.
+		\item Write introduction based on the results.
+		\item Finalize results section.
+		\item Spend \~ one month looking for possible data sets.
+		\item Either add data analysis or write discussion and be done.
+	\end{itemize}
+\end{itemize}
 
 \comment{
 \paragraph{Comment 29. 7., edited 8. 9. Does the slow dynamics of $\ell$ lead to a steady state that is localized at $\ell_{\rm opt}$?}
@@ -362,50 +384,12 @@ This landscape is proportional to $\ell_0$; that is, complexity begets more comp
 \end{enumerate}
 }
 
-
-
-\subsection*{Discussion}
-\textcolor{ForestGreen}{Here we should discuss the meaning of our results. The two factors of increased binding site length. First, the dynamics of length evolution lead to a much higher binding site length in equilibrium, than observed from minimizing the genetic load. But. Also we should discuss which data could support our theory. And finally, the shortcoming of the theory. Like how the approximation of the distribution is not really good for higher selection coefficients. And what how it could be used to improve. And finally how we think experiments could be set up to test the hypthesis experimentally.}
-
-
-
-\bibliography{complexity_refs.bib}
-
-
-
-
-%\begin{thebibliography}{10}
-%
-%	\expandafter\ifx\csname url\endcsname\relax
-%	\def\url#1{\texttt{#1}}\fi
-%	\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
-%	\providecommand{\bibinfo}[2]{#2}
-%	\providecommand{\eprint}[2][]{\url{#2}}
-%
-%
-%	\input{papers}
-%
-%
-%\end{thebibliography}
-
-
-
-\section*{Acknowledgments}
-
-
-
-\section*{Author Contributions}
-
-
-\section*{Competing Interests}
-The authors declare no competing interests.
-
-
+\clearpage
 \section*{Supplementary Information}
 
 \paragraph*{Supplementary Methods~1}
 \label{supp1}
-{\bf Steady State Approximations.}\\
+\textbf{Steady State Approximations}\\
 
 \noindent In the regime of low mutation rates, $\mu N\ll1$, a population is in a monomorphic state, i.e., dominated by a single genotype, 
 for most of the time. A new mutation fixes in the population with probability $p(s)$ given by \cite{kimura_probability_1962},
@@ -461,18 +445,6 @@ given by
 	Q(E) = Q_0(E) \exp\left[ \frac{2N}{1+\kappa} F(E) \right].
 \end{equation}
 
-\outcomment{
-\paragraph*{Supplementary Methods~2}
-\label{suppx}
-{\bf Steady State Approximation using substitution rates.}\\ \\
-In the low mutation rate limit, the mean binding energy is more discrete, and a substitution leads to bigger changes in the binding energy. Therefore, selection coefficients can get larger than $N\,s\sim1$, and the approximation of the steady state deviates from the exact distribution. Especially for short binding sites, the range of possible mutations with small effects decreases to the order of 1. To correct for the discrete energy space, we can rescale the non-equilibrium parameter $\kappa$ to an effective parameter $\tilde{\kappa} = \xi\kappa$, where $\xi$ is the rescaling factor which reproduces the first moment of the exact distribution the best. $\alpha$ takes maximal values of order 1, and in figure \ref{supfig1} the retrieved value is shown for different binding lengths $l$ and different fitness parameters $f_0$. For longer binding sites or smaller total selection coefficients, the rescaling factor approaches 1, which is consistent with the fact, that longer binding sites have more mutations with small selection coefficients and approach the continuum limit.
-
-Due to the discrete mean binding energies in the low mutation rate limit, selection coefficients can become larger than in the continuous regime. Therefore the approximation deviates from the exact numerical distribution when the discretization becomes a big factor, i.e., for short sequences or large selections coefficients. When the approximation deviates from the exact solution, it underestimates the effect of non-equilibrium.
-%\begin{figure}
-%	\includegraphics[width=0.5\linewidth]{robustness.pdf}
-%%	\caption{\textbf{Robustness in discrete trait space.} }\label{supfig1}
-%\end{figure}
-}
 
 \clearpage
 \paragraph*{Supplementary Methods~2}
