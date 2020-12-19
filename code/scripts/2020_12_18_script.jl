@@ -31,8 +31,8 @@ end
 
 # Parameters
 @everywhere begin
-    reps = 2  
-    steps = 2
+    reps = 100  
+    steps = 10^7
     rho = [0, 0.1, 0.5, 1., 2, 3]
     l_0 = 10
     N = 100
