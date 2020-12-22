@@ -286,6 +286,8 @@ The authors declare no competing interests.
 	\end{itemize}
 \end{itemize}
 
+
+\newpage 
 \comment{
 \paragraph{Comment 29. 7., edited 8. 9. Does the slow dynamics of $\ell$ lead to a steady state that is localized at $\ell_{\rm opt}$?}
 \begin{enumerate}
@@ -382,6 +384,48 @@ This landscape is proportional to $\ell_0$; that is, complexity begets more comp
 \\
 (3) How does $\ell^*$ compare with the numerics?
 \end{enumerate}
+
+
+\paragraph{Comments 17. 12.}
+\begin{enumerate}
+\item We could map the performance of the ratchet -- in particular, the maximum complexity gain -- as a function of the following independent parameters (see notebook adaptive ratchet 3): 
+
+\begin{itemize}
+\item Binding free energy gap $\Delta G$ (in units of $k_B T$). Reasonable values: $\Delta G \gtrsim 6$. 
+
+\item Functional binding length $\ell_0$ (excess number of binding positions per site compared to average random sequence),  
+\EQ
+\ell_0 = \frac{\Delta G}{\ep_0}, 
+\EE
+where $\ep_0 = \Delta \Delta G$ is the average free energy effect per mutation. Reasonable values $\ep_0 \sim 1$ (in units of $k_B T$). Smaller $\ep_0$ decrease curvature effects in the fitness landscape. 
+
+\item Fitness effect per site, $f_0$. Reasonable values: $f_0 \gtrsim 10$. Smaller values of $f_0$ increase the probability of function loss (in particular, at high $\kappa$), larger values increase curvature effects in the fitness landscape. 
+\end{itemize}
+
+The constraint selection coefficient $\lambda$ is not independent, but is to be tuned so that equilibrium sites are close to the minimal functional length (to be implemented in notebook). 
+
+\item We know that sites tend to lose function at high $\kappa$ and insufficient $f_0$. Can we analytically capture this effect by a condition for stability analogous to eq. (10) of the phenotypic interference paper? This would read 
+\EQ
+\frac{{\cal L}^*_b (\ell)}{\tilde \sigma} \lesssim \frac{f_0}{2}
+\EE
+with 
+\EQA
+\frac{{\cal L}^*_b (\ell)}{\tilde \sigma} & \equiv & \frac{F_b (\gamma \!=\! 1, \ell) - F_b (\gamma^*(\ell), \ell)}{\tilde \sigma} 
+\nonumber 
+\\
+& = & \frac{(1 + \kappa)(\gamma^* (\ell) - \gamma_0)}{\ep_0} \simeq \frac{(1 + \kappa)}{\ep_0} \frac{\ell_0}{\ell}. 
+\EEA
+
+\item A preliminary observation from the notebook is that the complexity gain appears to remain capped at about 2, even when the sites remain functional at the ML point. This seems to be caused by the length-increasing mutations becoming more negatively selected at higher values of $\kappa$. Can we understand why and maybe overcome this limit in some parameter regime? 
+
+\item Calibration of $\lambda$. Imposing the condition that the minimum functional site length equals the equilibrium length appears to give
+\EQ
+\lambda = \frac{1}{\ep_0} \frac{\ell_0^2}{\ell_{\rm min }^2 }
+\EE
+with $\ell_{\rm min} (\gamma_0, \ep_0)$ given in the notebook. This expression is numerically too small and needs to be refined. 
+\end{enumerate}
+
+
 }
 
 \clearpage
@@ -461,48 +505,6 @@ given by
 \label{supp4}
 \input{supp4.tex}
 
-\clearpage
-\outcomment{
-To compute length substitution rates, we have to consider all possible energies at which a length mutation can occur, since at each energy there is different 
-selection coefficient. Added elements are random and therefore the probability of adding a match is $1/4$. The 
-probability of a match being removed depends on the ratio of matches in the binding site, $k/l$.
-\begin{align}
-u_+(l)=&N\nu\sum_{k}\left[\frac{1}{4}p\left(s^+_m(k,l)\right)+\frac{3}{4}p\left(s^+_{mm}(k,l)\right)\right]Q(k|l),\label{equ:up_rate}\\
-u_-(l)=&N\nu\sum_{k}\left[\frac{k}{l}p\left(s^-_m(k,l)\right)+\left(1-\frac{k}{l}\right)p\left(s^-_{mm}(k,l)\right)\right]Q(k|l),\label{equ:down_rate}
-\end{align}
-where $\nu$ is the length mutation rate, $N$ is the population and $p(s)$ the Kimura fixation probability for selection coefficient $s$. The selection coefficients are
-\begin{align*}
-	s_m^+&=f(k+1,l+1)-f(k,l) &\text{match addition},\\
-	s_{mm}^+&=f(k,l+1)-f(k,l) &\text{mismatch addition},\\
-	s_m^-&=f(k-1,l-1)-f(k,l) &\text{match removal},\\
-	s_{mm}^-&=f(k,l-1)-f(k,l) &\text{mismatch removal}.
-\end{align*}
-Between each length mutation, the binding sites relax to the steady state distribution for fixed length, $Q(k|l)$ (\textcolor{blue}{hier vielleicht plot von steady state distribution und k's vor mutations}). With the substitution rates in hand, we can compute a steady state distribution $P(l)$ for binding lengths using detailed balance (\textcolor{blue}{steady state = equilibrium in 1D}),
-\begin{equation}
-u_+(l)P(l)=u_-(l+1)P(l).\label{equ:det_bal}
-\end{equation}
-The stationary length distribution is also the result of a marginalization of the two dimensional probability,
-\begin{align}
-&Q(k,l)=\frac{1}{Z}Q_0(k,l)\exp\left[2NF(k,l)\right]\\
-&\Rightarrow P(l) = \frac{1}{Z}\sum_{k=0}^{l}Q(k,l).
-\end{align}
-Evolutionary distributions can usually be written as exponential of a potential, $P(l)\sim e^{-\beta F_\mathrm{eff}(l)}$, which we can compute using the substitution rates,
-\begin{equation}
-	F_\mathrm{eff}(l)=\sum_{i=1}^{l-1}\log\frac{u_+(i)}{u_-(i+1)}+c.
-\end{equation}
-In the absence of any fitness landscape, $f_l=0$ and $f_0=0$, there is no preferred binding length, and the length distribution is uniform, $P(l)=P_0(l)=1/Z$. In the case of neutral binding, i.e., $f_0=0$, the fitness landscape is simply linear in length. Therefore the length distribution is simply an exponential distribution, following from (\textcolor{blue}{find citation})
-\begin{equation}
-	P(l)=P_0(l)\exp(2NF(l))\sim \exp(-2Nf_l\,l)
-\end{equation}
 
-\vspace{3cm}
-\textcolor{purple}{Now we do the whole thing again, but using the approximation using only the predicted peak from the previous section. This allows us to neglect the part of the distribution which is on the lower fitness plateau and anyways not part of the previous calculation,
-\begin{align}
-u_+(l)=&N\nu \left[ \frac{1}{4} p\left(s^+_m \right) + \frac{3}{4} p\left(s^+_{mm} \right) \right], \label{equ:up_rate2}\\
-u_-(l)=&N\nu\left[(1-\gamma) p\left(s^-_m \right) + \gamma p\left(s^-_{mm}\right)\right].\label{equ:down_rate2}
-\end{align}
-We computed the selection coefficients up to second order in the previous section, and are going to use them here to compute the forward and backward rates.
-}
-}
 
 \end{document}

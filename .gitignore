@@ -44,19 +44,19 @@ data/RegSeq/sequence_counts/*
 
 
 ## Core latex/pdflatex auxiliary files:
-*.aux
-*.lof
-*.log
-*.lot
-*.fls
-*.out
-*.toc
-*.fmt
-*.fot
-*.cb
-*.cb2
-.*.lb
-*.synctex.gz
+**.aux
+**.lof
+**.log
+**.lot
+**.fls
+**.out
+**.toc
+**.fmt
+**.fot
+**.cb
+**.cb2
+**.*.lb
+**.synctex.gz
 
 ## Intermediate documents:
 *.dvi
