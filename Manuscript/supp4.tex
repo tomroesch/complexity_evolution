@@ -9,8 +9,8 @@ The selection coefficients for length mutations are the given by,
 \begin{alignat}{3}
 	& s_+^M    \quad && = F(\Gamma, l+1) - F(\Gamma, l)          \quad && = -f_l - \frac{n-1}{n}\epsilon\,f'(\Gamma, l),\\
 	& s_+^{MM} \quad && = F(\Gamma+\epsilon, l+1) - F(\Gamma, l) \quad && = -f_l + \frac{1}{n}\epsilon\,f'(\Gamma, l),\\
-	& s_-^M    \quad && = F(\Gamma, l) - F(\Gamma, l+1)          \quad && = f_l + \frac{1}{n}\epsilon\,f'(\Gamma, l),\\
-	& s_-^{MM} \quad && = F(\Gamma-\epsilon, l) - F(\Gamma, l+1) \quad && = f_l - \frac{n-1}{n}\epsilon\,f'(\Gamma, l),
+	& s_-^M    \quad && = F(\Gamma, l) - F(\Gamma, l+1)          \quad && = f_l + \frac{n-1}{n}\epsilon\,f'(\Gamma, l),\\
+	& s_-^{MM} \quad && = F(\Gamma-\epsilon, l) - F(\Gamma, l+1) \quad && = f_l - \frac{1}{n}\epsilon\,f'(\Gamma, l),
 \end{alignat}
 where the subscript is indicating increase (+) or decrease mutation (-) and the superscript is indicating whether the mutation is regarding a match($M$) or mismatch($MM$)
 When adding a position, a match is added with probability $1/n$, and mismatch with probability $(n-1)/n$. The average selection coefficient of a length increase mutation is then given by

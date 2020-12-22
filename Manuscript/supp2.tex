@@ -57,9 +57,9 @@ In figure \ref{fig:drift_scaling_n_rho} we can see (\purple{add figure descripti
 
 \noindent In addition to the drift of the mean, we look at the scaling of the diversity within a population for various alphabet sizes and non-equilibrium ratios. From the simulations in figure \ref{fig:drift_scaling_n_rho}, we already see that the diversity in steady state is the same for all tested non-equilibrium ratios. Since a substitution in the driver sequence changes the preferred nucleotide for each species, there is no significant change in the diversity within the population. To study the dependence on the alphabet size, we have to consider the effect mutation rate, that is the rate at which the binding energy changes, which differs if the alphabet is bigger than binary. Given that the total mutation rate per position is $\mu$, the trait changing mutation rate is also $\mu$ if the position is a match, since any mutation will lead to a mismatch. However, if the position is a mismatch, then only one out of $n-1$ possible mutations leads to a trait change. Therefore, the average trait changing mutation rate $\tilde \mu$ is given by
 \begin{equation}
-    \tilde \mu = \frac{\Gamma}{l} \frac{\mu}{n-1} + \left(1 - \frac{\Gamma}{l} \right) \mu.
+    \tilde \mu = \frac{\Gamma}{\epsilon l} \frac{\mu}{n-1} + \left(1 - \frac{\Gamma}{\epsilon l} \right) \mu.
 \end{equation}
-In the absence of fitness, the steady state mean binding energy is $\Gamma=\Gamma_0=1-1/n$, therefore the trait changing mutation rate is given by $\tilde \mu = 2\mu/n$. Then, the trait diversity within a population at steady state is given by 
+In the absence of fitness, the steady state mean binding energy is $\Gamma/\epsilon=\Gamma_0\epsilon=1-1/n$, therefore the trait changing mutation rate is given by $\tilde \mu = 2\mu/n$. Then, the trait diversity within a population at steady state is given by 
 \begin{equation}
     \Delta_E = \frac{2}{n}\mu Nl\epsilon^2
 \end{equation}
