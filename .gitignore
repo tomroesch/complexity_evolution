@@ -44,7 +44,7 @@ data/RegSeq/sequence_counts/*
 
 
 ## Core latex/pdflatex auxiliary files:
-**.aux
+*.aux
 **.lof
 **.log
 **.lot
