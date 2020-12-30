@@ -79,7 +79,7 @@ kappa_list = SharedArray{Float64, 3}(length(κ_arr), length(l_arr), reps)
         for (i2, l) in enumerate(l_arr)
             E = run(N, l, emat, F, κ, l_0, gap, steps)
             E_results[i1, i2, j] = E
-            l_results[i1, i2, j] = l
+            l_list[i1, i2, j] = l
             rho_list[i1, i2, j] = κ
         end
     end
