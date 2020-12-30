@@ -80,11 +80,11 @@ kappa_list = SharedArray{Float64, 3}(length(κ_arr), length(l_arr), reps)
             E = run(N, l, emat, F, κ, l_0, gap, steps)
             E_results[i1, i2, j] = E
             l_list[i1, i2, j] = l
-            rho_list[i1, i2, j] = κ
+            kappa_list[i1, i2, j] = κ
         end
     end
     println("Run $j done.")
 end
-df = DataFrame(gamma=[(E_results...)...], l=[(l_results...)...], rho=[(rho_list...)...])
+df = DataFrame(gamma=[(E_results...)...], l=[(l_results...)...], kappa=[(kappa_list...)...])
 CSV.write(date * "_results.csv", df)
 
