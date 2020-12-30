@@ -75,8 +75,8 @@ kappa_list = SharedArray{Float64, 3}(length(κ_arr), length(l_arr), reps)
 
 # Run simulations and enjoy speed
 @sync @distributed for j in 1:reps
-    for (i1, κ) in enumerate(kappa_list)
-        for (i2, l) in enumerate(l_list)
+    for (i1, κ) in enumerate(κ_arr)
+        for (i2, l) in enumerate(l_arr)
             E = run(N, l, emat, F, κ, l_0, gap, steps)
             E_results[i1, i2, j] = E
             l_results[i1, i2, j] = l
