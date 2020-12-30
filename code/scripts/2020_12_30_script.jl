@@ -85,6 +85,6 @@ kappa_list = SharedArray{Float64, 3}(length(κ_arr), length(l_arr), reps)
     end
     println("Run $j done.")
 end
-df = DataFrame(gamma=[(E_results...)...], l=[(l_results...)...], kappa=[(kappa_list...)...])
+df = DataFrame(gamma=[(E_results...)...], l=[(l_list...)...], kappa=[(kappa_list...)...])
 CSV.write(date * "_results.csv", df)
 
