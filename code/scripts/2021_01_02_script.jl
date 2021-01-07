@@ -49,7 +49,7 @@ end
         if rand() < κ/N
             Jevo.driver_mutation!(pop)
         end
-        if (rand() < 1/N^2) && (Jevo.get_energy(pop, emat)*l_0/length(pop.seqs)/gap < Jevo.γ_0(n))
+        if (rand() < 1/10N) && (Jevo.get_energy(pop, emat)*l_0/length(pop.seqs)/gap < Jevo.γ_0(n))
             Jevo.l_substitution!(pop, emat, F)
 	elseif (Jevo.get_energy(pop, emat)*l_0/length(pop.seqs)/gap > Jevo.γ_0(n))
             pop = Jevo.mono_pop(N=N, l=length(pop.seqs))

@@ -23,7 +23,7 @@ end
 
 # Simulation parameters
 N = 1000
-reps = 100                        # Repetitions
+reps = 200                        # Repetitions
 rho_array = [0, 0.1, 0.5, 1]      # Driver mutation rates
 l_array = collect(5:30)           # Binding site lengths
 f0_array = [20, 50, 100] ./ 2N    # Fitness scales

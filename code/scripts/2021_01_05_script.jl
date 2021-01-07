@@ -30,12 +30,12 @@ end
     l_0 = 20
     fl = .7l_0
     f0 = 20l_0
-    κ_arr = 0:2:20
+    κ_arr = [0, 1, 2, 5, 10, 20]
     n = 4
-    N = 1000
+    N = 100
     steps = 10^8
     reps = 200
-    F = Jevo.num_fermi(n, l_0, gap, f0/2N, fl/2N)
+    F = Jevo.num_fermi(n, l_0, gap, f0, fl/2N)
     emat = gap/l_0 * (ones(n, n) - Matrix{Float64}(I, n, n))
 end
 
@@ -49,7 +49,7 @@ end
         if rand() < κ/N
             Jevo.driver_mutation!(pop)
         end
-        if (rand() < 1/N^2) && (Jevo.get_energy(pop, emat)*l_0/length(pop.seqs)/gap < Jevo.γ_0(n))
+        if (rand() < 1/10N) && (Jevo.get_energy(pop, emat)*l_0/length(pop.seqs)/gap < Jevo.γ_0(n))
             Jevo.l_substitution!(pop, emat, F)
 	elseif (Jevo.get_energy(pop, emat)*l_0/length(pop.seqs)/gap > Jevo.γ_0(n))
             pop = Jevo.mono_pop(N=N, l=length(pop.seqs))
