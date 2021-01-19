@@ -25,7 +25,7 @@ end
 # Parameters
 @everywhere begin
     reps = 100
-    steps = 1 * 10^6
+    steps = 2 * 10^7
     N = 100
     nu = 1/N
     ϵ = 2
@@ -36,12 +36,12 @@ end
     f0 = 200 / 2N 
 end
 
-rescue = true
+rescue = false
 
 
 @everywhere l0_kappa(kappa, l, ϵ=2, n=4) = 1/2 * lambertw(2 * ϵ^2 * N * l * f0 * (n-1)/n^2 * exp(10)/(1+kappa))
-@everywhere fl(l_opt) = l0_kappa(0, 10)/l_opt^2 * n^2 / (n-1) * 1/ϵ
-
+#@everywhere fl(l_opt) = l0_kappa(0, 10)/l_opt^2 * n^2 / (n-1) * 1/ϵ
+@everywhere fl(l_opt) = l0_kappa(0, 10)^2 / l_opt^2 * n^2 / (n-1) * 1/2
 
 
 Gamma_results = SharedArray{Float64, 4}(length(rho_array), length(l_array), 1, reps)
