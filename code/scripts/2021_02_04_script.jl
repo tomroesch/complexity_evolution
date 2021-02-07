@@ -15,7 +15,6 @@ gap = 10
 l_0 = 20
 n = 4
 N = 100
-steps = 1*10^5
 fl = 0.6l_0/2N
 f0 = 200l_0/2N
 κ_arr = [0, 1, 2, 3, 4, 5, 10, 20, 40]
@@ -64,7 +63,7 @@ for i in 1:length(κ_arr)
 end
 
 Threads.@threads for i in 1:length(κ_arr)
-    E, L = Run(N, 100, emat, F, κ_arr[i], l_0, gap, 10)
+    E, L = Run(N, 130, emat, F, κ_arr[i], l_0, gap, 10^8)
     x, y = make_histogram(L)
     x_list[i] = x
     y_list[i] = y
@@ -74,7 +73,7 @@ end
 
 
 df = DataFrame(p_l=[(y_list...)...], l=[(x_list...)...], kappa=[(κ_list...)...])
-#=
+
 CSV.write(date * "_results.csv", df)
     
 
@@ -84,10 +83,6 @@ open(date*"_METADATA.txt", "a") do io
     write(io, "f0=$f0\n")
     write(io, "fl=$fl\n")
     write(io, "kappa=$κ_arr\n")
-    write(io, "l=$l_arr\n")
     write(io, "n=$n\n")
     write(io, "N=$N\n")
-    write(io, "steps=$steps\n")
 end
-
-=#
