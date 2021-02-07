@@ -39,7 +39,7 @@ function Run(N, l, emat, F, κ, l_0, gap, steps)
         if rand() < κ/N
             Jevo.driver_mutation!(pop)
         end
-        if rand() < 1/(10N * (1+κ))
+        if rand() < 1/(N * (1+κ))
             Jevo.l_substitution!(pop, emat, F)
         end
         E_arr[r] = Jevo.get_energy(pop, emat)
